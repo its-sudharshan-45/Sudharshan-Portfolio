@@ -27,15 +27,6 @@ Welcome! This is my personal developer portfolio, designed to showcase my journe
 
 ---
 
-## 📸 Preview
-
-> [!TIP]
-> Save a screenshot of your portfolio home page as `public/Images/portfolio-screenshot.png` to display it below.
-
-![Portfolio Home Page Screenshot](./public/Images/portfolio-screenshot.png)
-
----
-
 ## 🚀 Features
 
 - **📱 Fully Responsive Design**: Mobile-first fluid layout optimized for immaculate cross-device accessibility and breakpoints.
@@ -61,7 +52,7 @@ Welcome! This is my personal developer portfolio, designed to showcase my journe
 ## 🔗 Live Demo
 
 You can view the live deployed version of my portfolio here:
-👉 **[Live Portfolio Demo](https://your-deployed-portfolio-link.com)** *(Placeholder)*
+👉 **[Live Portfolio Demo](https://sudharshan-portfolio-ruby.vercel.app/)** *(Placeholder)*
 
 ---
 
