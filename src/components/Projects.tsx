@@ -112,6 +112,28 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
   // 1. PROJECTS LIST
   const projects: Project[] = [
     {
+      id: "SemesterSwap",
+      title: "SemesterSwap",
+      shortDescription: "SemesterSwap is an AI-powered student marketplace that enables verified college students to securely buy, sell, and exchange academic essentials through trusted peer-to-peer transactions.",
+      longDescription: "SemesterSwap is a full-stack, AI-powered marketplace built exclusively for verified college students. The platform enables secure peer-to-peer trading of textbooks, lab equipment, notes, and other academic essentials within a trusted campus community. Key features include AI-driven listing optimization with product title enhancement and description generation powered by Anthropic Claude, Groq, and Google Gemini, personalized recommendations, real-time chat, SMTP-based email notifications, campus meeting coordination, and structured transaction workflows. By combining verified student authentication, trust-focused interactions, and intelligent automation, SemesterSwap delivers a safer, smarter, and more efficient marketplace experience for students.",
+      demoUrl: "https://semester-swap-seven.vercel.app/",
+      githubUrl: "https://github.com/its-sudharshan-45/SemesterSwap",
+      detailsUrl: "#",
+      imageUrl: "/Project_Images/SemesterSwap.png",
+      techCount: 13,
+      featureCount: 5,
+      tags: ["React","TypeScript","Vite", "Tailwind CSS", "Python", "FastAPI", "SQLAlchemy", "Supabase PostgreSQL", "Supabase Auth","JWT","Anthropic Claude","Groq","Google Gemini"],
+      keyFeatures: [
+        "AI-Powered Listing Optimization (Product Title Enhancement & Description Generation)",
+        "Multi-Provider AI Integration (Anthropic Claude, Groq, Google Gemini)",
+        "Real-Time Chat & Messaging System",
+        "SMTP-Based Email Notifications",
+        "Campus Meeting Coordination",
+        "Structured Transaction Workflows",
+        "Secure Authentication & Authorization (JWT)"
+      ],
+    },
+    {
       id: "JobGuard",
       title: "JobGuard",
       shortDescription: "JobGuard provides an intelligent and reliable solution for detecting recruitment scams, improving trust, transparency, and safety in online job marketplaces.",
