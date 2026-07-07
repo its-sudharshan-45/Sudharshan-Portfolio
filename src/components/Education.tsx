@@ -152,7 +152,7 @@ export default function Education({ theme = "light" }: EducationProps) {
                     }`}>
                       B.Tech-Artificial Intelligence and Data Science
                     </p>
-                    <p>CGPA: 7.86</p>
+                    <p>CGPA: 8.02</p>
                   </div>
                 </motion.div>
               </div>
