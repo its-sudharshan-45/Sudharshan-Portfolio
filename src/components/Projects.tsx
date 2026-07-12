@@ -1,6 +1,6 @@
-import { useState, ReactNode } from "react";
+import React, { useState, ReactNode } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Terminal, Layers, ExternalLink, ArrowRight, X, CheckCircle2, Code, ShieldCheck, Database, Server, Smartphone, Cpu, ArrowLeft, Star, Github, Award, FileText } from "lucide-react";
+import { Terminal, Layers, ExternalLink, ArrowRight, Code, Cpu, ArrowLeft, Star, Github, Award, FileText, Link2, BadgeCheck, Calendar, Hash } from "lucide-react";
 
 // Project Type Definition
 interface Project {
@@ -32,6 +32,9 @@ interface Certificate {
   credId: string;
   pdfUrl: string;
   imageUrl: string;
+  driveUrl?: string;
+  category: string;
+  accentColor: string;
   element: ReactNode;
 }
 
@@ -39,69 +42,155 @@ interface CertificateCardProps {
   key?: string | number;
   cert: Certificate;
   theme: "light" | "dark";
+  index: number;
 }
 
-function CertificateCard({ cert, theme }: CertificateCardProps) {
+function CertificateCard({ cert, theme, index }: CertificateCardProps) {
+  const [flipped, setFlipped] = useState(false);
+
   return (
-    <div
-      className={`group relative rounded-2xl border-2 p-4 shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden ${
-        theme === "dark"
-          ? "border-[#00f5b4]/80 bg-[#0c121d] hover:border-[#00f5b4]"
-          : "border-teal-500 bg-white hover:border-teal-600 shadow-md"
-      }`}
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.55, delay: index * 0.1, ease: "easeOut" }}
+      className="group relative"
+      style={{ perspective: "1200px" }}
     >
-      {/* Certificate Viewport (3:2 Aspect Ratio) */}
-      <div className={`relative w-full aspect-[3/2] rounded-xl overflow-hidden shadow-inner border bg-white transition-transform duration-300 group-hover:scale-[1.01] ${
-        theme === "dark" ? "border-zinc-950" : "border-slate-200"
-      }`}>
-        <img
-          src={cert.imageUrl}
-          alt={cert.title}
-          className="w-full h-full object-contain bg-neutral-950/5 p-1 transition-transform duration-500 hover:scale-105"
-          loading="lazy"
-        />
-      </div>
-      
-      {/* Meta Tags below */}
-      <div className="mt-4 px-1 flex flex-col justify-between">
-        <div className="flex justify-between items-start gap-4">
-          <div>
-            <h3 className={`font-display text-base font-extrabold transition-colors duration-200 leading-tight ${
-              theme === "dark" ? "text-white group-hover:text-[#00f5b4]" : "text-slate-850 group-hover:text-teal-600"
-            }`}>
-              {cert.title}
-            </h3>
-            <span className={`text-[10px] uppercase tracking-wider font-bold block mt-1 ${theme === "dark" ? "text-teal-400" : "text-teal-600"}`}>
-              {cert.issuer}
-            </span>
+      {/* Ambient glow halo */}
+      <div
+        className="absolute -inset-1 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl pointer-events-none"
+        style={{ background: `radial-gradient(ellipse at center, ${cert.accentColor}40, transparent 70%)` }}
+      />
+
+      {/* Card shell */}
+      <div
+        className={`relative rounded-2xl border overflow-hidden shadow-2xl transition-all duration-500 group-hover:-translate-y-2 ${
+          theme === "dark"
+            ? "border-white/8 bg-gradient-to-b from-[#111827] to-[#0c1220]"
+            : "border-slate-200/80 bg-white"
+        }`}
+        style={{ boxShadow: theme === "dark" ? `0 0 0 1px ${cert.accentColor}20, 0 20px 60px rgba(0,0,0,0.4)` : `0 4px 30px rgba(0,0,0,0.08), 0 0 0 1px ${cert.accentColor}30` }}
+      >
+        {/* Top accent bar */}
+        <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${cert.accentColor}, ${cert.accentColor}60)` }} />
+
+        {/* Certificate image area with 3D flip effect */}
+        <div
+          className="relative w-full cursor-pointer select-none"
+          style={{ aspectRatio: "16/9", perspective: "800px" }}
+          onClick={() => setFlipped(!flipped)}
+          title="Click to flip"
+        >
+          {/* Flip container */}
+          <div
+            className="relative w-full h-full transition-all duration-700"
+            style={{
+              transformStyle: "preserve-3d",
+              transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)"
+            }}
+          >
+            {/* Front face – certificate image */}
+            <div className="absolute inset-0" style={{ backfaceVisibility: "hidden" }}>
+              <img
+                src={cert.imageUrl}
+                alt={cert.title}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                loading="lazy"
+              />
+              {/* Hover overlay with hint text */}
+              <div className={`absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                theme === "dark" ? "bg-black/40" : "bg-black/20"
+              }`}>
+                <span className="text-white text-xs font-bold bg-black/50 backdrop-blur-sm px-3 py-1.5 rounded-full tracking-widest uppercase">
+                  Click to flip
+                </span>
+              </div>
+            </div>
+
+            {/* Back face – credential details */}
+            <div
+              className={`absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 ${
+                theme === "dark" ? "bg-[#0c1220]" : "bg-slate-50"
+              }`}
+              style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+            >
+              <div className="h-14 w-14 rounded-full flex items-center justify-center shadow-lg" style={{ background: `${cert.accentColor}25`, border: `2px solid ${cert.accentColor}60` }}>
+                <BadgeCheck size={28} style={{ color: cert.accentColor }} />
+              </div>
+              <p className={`text-center text-xs font-bold uppercase tracking-widest ${theme === "dark" ? "text-zinc-400" : "text-slate-500"}`}>Credential ID</p>
+              <p className={`text-center text-sm font-mono font-semibold break-all ${theme === "dark" ? "text-white" : "text-slate-800"}`}>{cert.credId}</p>
+              <div className={`w-full border-t mt-2 pt-3 flex flex-col items-center gap-1 ${theme === "dark" ? "border-white/10" : "border-slate-200"}`}>
+                <p className={`text-[10px] uppercase tracking-widest font-bold ${theme === "dark" ? "text-zinc-500" : "text-slate-400"}`}>Issued by</p>
+                <p className={`text-sm font-extrabold ${theme === "dark" ? "text-white" : "text-slate-800"}`}>{cert.issuer}</p>
+              </div>
+            </div>
           </div>
         </div>
-        
-        <div className={`flex justify-between items-center mt-4 pt-3.5 border-t text-[11px] font-semibold ${
-          theme === "dark" ? "border-zinc-800/40 text-zinc-400" : "border-slate-100 text-slate-550 text-slate-500"
-        }`}>
-          <span className={`${theme === "dark" ? "text-zinc-500" : "text-slate-400"} text-[10px]`}>
-            Issued: {cert.date}
-          </span>
-          
-          {/* PDF Viewer Action Button */}
-          <a
-            href={cert.pdfUrl}
-            target="_blank"
-            rel="noreferrer"
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold tracking-tight transition-all shadow-sm cursor-pointer ${
-              theme === "dark"
-                ? "bg-teal-500/10 hover:bg-[#00f5b4]/25 text-[#00f5b4] border border-[#00f5b4]/20"
-                : "bg-teal-50 hover:bg-teal-100 text-teal-700 border border-teal-600/20"
-            }`}
-          >
-            <FileText size={13} />
-            <span>Open PDF</span>
-            <ExternalLink size={10} className="opacity-80" />
-          </a>
+
+        {/* Card body */}
+        <div className="p-5">
+          {/* Category badge + date */}
+          <div className="flex items-center justify-between mb-3">
+            <span
+              className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-full"
+              style={{ background: `${cert.accentColor}20`, color: cert.accentColor }}
+            >
+              <Hash size={9} />
+              {cert.category}
+            </span>
+            <span className={`inline-flex items-center gap-1 text-[10px] font-semibold ${theme === "dark" ? "text-zinc-500" : "text-slate-400"}`}>
+              <Calendar size={10} />
+              {cert.date}
+            </span>
+          </div>
+
+          {/* Title */}
+          <h3 className={`font-display text-base sm:text-lg font-extrabold leading-snug mb-1 transition-colors ${
+            theme === "dark" ? "text-white" : "text-slate-900"
+          }`}>
+            {cert.title}
+          </h3>
+
+          {/* Issuer */}
+          <p className={`text-xs font-bold uppercase tracking-wider ${theme === "dark" ? "text-zinc-400" : "text-slate-500"}`}>
+            {cert.issuer}
+          </p>
+
+          {/* Divider */}
+          <div className={`my-4 h-px ${theme === "dark" ? "bg-white/8" : "bg-slate-100"}`} />
+
+          {/* Action buttons */}
+          <div className="flex items-center gap-2.5">
+            {cert.driveUrl && (
+              <a
+                href={cert.driveUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold tracking-tight transition-all duration-200 hover:brightness-110 active:scale-95"
+                style={{ background: `${cert.accentColor}20`, color: cert.accentColor, border: `1px solid ${cert.accentColor}40` }}
+              >
+                <Link2 size={12} />
+                <span>View Certificate</span>
+              </a>
+            )}
+            <a
+              href={cert.pdfUrl}
+              target="_blank"
+              rel="noreferrer"
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold tracking-tight transition-all duration-200 active:scale-95 ${
+                theme === "dark"
+                  ? "bg-white/5 hover:bg-white/10 text-zinc-300 border border-white/10"
+                  : "bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200"
+              }`}
+            >
+              <FileText size={12} />
+              <span>Open PDF</span>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -206,13 +295,41 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
   // 2. CERTIFICATES LIST
   const certificates = [
     {
+      id: "cert-learn-java-codechef",
+      title: "Learn Java",
+      issuer: "CodeChef",
+      date: "9th July 2026",
+      credId: "eaeac5d | sudharsmarty00",
+      pdfUrl: "/Certificates/Learn Java Certificate.pdf",
+      imageUrl: "/Certificates/Learn Java.png",
+      driveUrl: "https://drive.google.com/file/d/1h3ZLHaCXdFppByUXsOwZorYRp9zoPiev/view?usp=drive_link",
+      category: "Programming",
+      accentColor: "#f59e0b",
+      element: null,
+    },
+    {
+      id: "cert-practice-java-codechef",
+      title: "Practice Java",
+      issuer: "CodeChef",
+      date: "10th July 2026",
+      credId: "83b14cd | sudharsmarty00",
+      pdfUrl: "/Certificates/Practice Java Certificate.pdf",
+      imageUrl: "/Certificates/Practice Java.png",
+      driveUrl: "https://drive.google.com/file/d/1eN9HZFFAag4rDdUAREQlvVmIknvzQfHi/view?usp=drive_link",
+      category: "Programming",
+      accentColor: "#f59e0b",
+      element: null,
+    },
+    {
       id: "cert-data-analytics-nptel",
       title: "Data Analytics with Python",
-      issuer: "IIT Roorkee",
+      issuer: "IIT Roorkee (NPTEL)",
       date: "Jan - Apr 2026",
       credId: "NPTEL25CS12S3",
       pdfUrl: "/Certificates/Data Analytics with Python - NPTEL.pdf",
       imageUrl: "/Certificates/Screenshot 2026-06-11 155449.png",
+      category: "Data Science",
+      accentColor: "#f59e0b",
       element: (
         <div className="relative w-full h-full bg-[#fdfbf7] border-[8px] bg-gradient-to-b from-[#fdfbf6] to-[#faf3da] border-[#a17e3b] p-3 flex flex-col justify-between font-sans text-neutral-800 rounded-xl overflow-hidden shadow-2xl">
           {/* Logo Headers */}
@@ -243,11 +360,13 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
     {
       id: "cert-cyber-security-nptel",
       title: "Practical Cyber Security for Cyber Security Practitioners",
-      issuer: "IIT Kanpur",
-      date: "Jul-Oct 2025",
+      issuer: "IIT Kanpur (NPTEL)",
+      date: "Jul - Oct 2025",
       credId: "NPTEL25CS120S154304549",
       pdfUrl: "/Certificates/Practical Cyber Security for Cyber Security Practitioners - NPTEL.pdf",
       imageUrl: "/Certificates/Screenshot 2026-06-11 155629.png",
+      category: "Cyber Security",
+      accentColor: "#06b6d4",
       element: (
         <div className="relative w-full h-full bg-[#f4fbfc] border-[8px] bg-gradient-to-b from-[#f4fbfc] to-[#e6f4f7] border-[#1b4e5a] p-3 flex flex-col justify-between font-sans text-neutral-800 rounded-xl overflow-hidden shadow-2xl">
           {/* Header */}
@@ -282,6 +401,8 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
       credId: "ODC-INT-25A",
       pdfUrl: "/Certificates/OneDot Communications - Full Stack Intern.pdf",
       imageUrl: "/Certificates/Screenshot 2026-06-11 155558.png",
+      category: "Internship",
+      accentColor: "#10b981",
       element: (
         <div className="relative w-full h-full bg-[#fafbfd] border-[8px] bg-gradient-to-b from-[#fafbfd] to-[#edf3fa] border-[#0c2a4a] p-3 flex flex-col justify-between font-sans text-neutral-800 rounded-xl overflow-hidden shadow-2xl">
           {/* Diagonal ribbon */}
@@ -317,6 +438,8 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
       credId: "CTC-INT-25B",
       pdfUrl: "/Certificates/Codec Technologies - Full Stack Intern.pdf",
       imageUrl: "/Certificates/Screenshot 2026-06-11 155522.png",
+      category: "Internship",
+      accentColor: "#10b981",
       element: (
         <div className="relative w-full h-full bg-[#fdfdfd] border-[8px] bg-gradient-to-b from-white to-[#f4f7f6] border-[#083327] p-3 flex flex-col justify-between font-sans text-neutral-800 rounded-xl overflow-hidden shadow-2xl">
           {/* Header */}
@@ -348,6 +471,9 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
   const techStackCategories = [
     {
       title: "Programming Languages",
+      icon: "</>",
+      accent: "#f59e0b",
+      glow: "rgba(245,158,11,0.25)",
       skills: [
         { name: "Java", iconPath: "/icon/Java.png" },
         { name: "Python", iconPath: "/icon/Python.png" },
@@ -356,6 +482,9 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
     },
     {
       title: "Frontend",
+      icon: "◈",
+      accent: "#3b82f6",
+      glow: "rgba(59,130,246,0.25)",
       skills: [
         { name: "HTML", iconPath: "/icon/HTML5.png" },
         { name: "CSS3", iconPath: "/icon/CSS3.png" },
@@ -365,6 +494,9 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
     },
     {
       title: "Backend",
+      icon: "⬡",
+      accent: "#10b981",
+      glow: "rgba(16,185,129,0.25)",
       skills: [
         { name: "Node.js", iconPath: "/icon/Node.js.png" },
         { name: "Express", iconPath: "/icon/Express.png" }
@@ -372,6 +504,9 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
     },
     {
       title: "AI / ML",
+      icon: "✦",
+      accent: "#a855f7",
+      glow: "rgba(168,85,247,0.25)",
       skills: [
         { name: "NumPy", iconPath: "/icon/NumPy.png" },
         { name: "Pandas", iconPath: "/icon/Pandas.png" },
@@ -381,6 +516,9 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
     },
     {
       title: "Database",
+      icon: "⬢",
+      accent: "#06b6d4",
+      glow: "rgba(6,182,212,0.25)",
       skills: [
         { name: "MySQL", iconPath: "/icon/MySQL.png" },
         { name: "MongoDB", iconPath: "/icon/MongoDB.png" },
@@ -390,6 +528,9 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
     },
     {
       title: "Developer Tools",
+      icon: "⚙",
+      accent: "#f43f5e",
+      glow: "rgba(244,63,94,0.25)",
       skills: [
         { name: "VS Code", iconPath: "/icon/Visual Studio Code (VS Code).png" },
         { name: "GitHub", iconPath: "/icon/GitHub.png" },
@@ -397,6 +538,8 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
       ]
     }
   ];
+
+  const totalSkills = techStackCategories.reduce((acc, c) => acc + c.skills.length, 0);
 
   return (
     <section id="portfolio" className={`relative bg-transparent py-10 sm:py-12 md:py-14 transition-colors duration-300 ${
@@ -814,84 +957,211 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
                 {activeTab === "certificates" && (
                   <motion.div
                     key="certificates-panel"
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -15 }}
-                    transition={{ duration: 0.4 }}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto px-4"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="max-w-6xl mx-auto px-2 sm:px-4"
                   >
-                    {certificates.map((cert) => (
-                      <CertificateCard key={cert.id} cert={cert} theme={theme} />
-                    ))}
+                    {/* Stats bar */}
+                    <div className={`flex flex-wrap items-center justify-center gap-3 mb-8 py-3.5 px-5 rounded-2xl ${
+                      theme === "dark" ? "bg-white/4 border border-white/8" : "bg-slate-50 border border-slate-200"
+                    }`}>
+                      {[
+                        { label: "Total Certificates", value: certificates.length, color: "#2dd4bf" },
+                        { label: "NPTEL Elite", value: 2, color: "#f59e0b" },
+                        { label: "Industry", value: 2, color: "#10b981" },
+                        { label: "Programming", value: 2, color: "#f59e0b" },
+                      ].map((stat, i) => (
+                        <div key={i} className="flex items-center gap-2 px-3">
+                          <span className="text-xl font-black" style={{ color: stat.color }}>{stat.value}</span>
+                          <span className={`text-xs font-semibold ${theme === "dark" ? "text-zinc-400" : "text-slate-500"}`}>{stat.label}</span>
+                          {i < 3 && <span className={`ml-3 h-4 w-px ${theme === "dark" ? "bg-white/10" : "bg-slate-200"}`} />}
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Certificate grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {certificates.map((cert, index) => (
+                        <CertificateCard key={cert.id} cert={cert} theme={theme} index={index} />
+                      ))}
+                    </div>
+
+                    {/* Bottom hint */}
+                    <p className={`text-center text-xs mt-8 ${
+                      theme === "dark" ? "text-zinc-600" : "text-slate-400"
+                    }`}>
+                      💡 Click on any certificate image to reveal credential details
+                    </p>
                   </motion.div>
                 )}
-
-
 
                 {/* TAB C: TECH STACK */}
                 {activeTab === "tech-stack" && (
                   <motion.div
                     key="tech-stack-panel"
-                    initial={{ opacity: 0, scale: 0.96, y: 15 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.96, y: -15 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-5xl mx-auto px-4"
+                    className="max-w-6xl mx-auto px-2 sm:px-4"
                   >
-                    {techStackCategories.map((category, catIndex) => (
-                      <div
-                        key={catIndex}
-                        className={`relative rounded-2xl border-2 px-4 py-5 flex flex-col items-center transition-all duration-300 hover:-translate-y-1 group ${
-                          theme === "dark"
-                            ? "border-[#00f5b4]/80 bg-[#0c121d] hover:border-[#00f5b4] shadow-2xl"
-                            : "border-teal-500 bg-white hover:border-teal-600 shadow-md"
-                        }`}
-                      >
-                        {/* Clean Inside Title Header */}
-                        <div className="w-full text-center mb-4">
-                          <h4 className={`font-display text-sm sm:text-base font-bold tracking-tight ${
-                            theme === "dark" ? "text-white" : "text-teal-900"
-                          }`}>
-                            {category.title}
-                          </h4>
-                          <div className={`w-8 h-[2px] mx-auto mt-1.5 rounded-full ${
-                            theme === "dark" ? "bg-[#00f5b4]" : "bg-teal-500"
-                          }`} />
-                        </div>
-
-                        {/* Row of Icon Asset Images */}
-                        <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-5 w-full">
-                          {category.skills.map((skill, skillIndex) => (
-                            <motion.div
-                              key={skillIndex}
-                              whileHover={{ scale: 1.08, y: -4 }}
-                              transition={{ type: "spring", stiffness: 350, damping: 20 }}
-                              className="flex flex-col items-center justify-center cursor-pointer group/item"
-                            >
-                              <div className={`flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center p-1.5 sm:p-2 rounded-xl border transition-all duration-300 ${
-                                theme === "dark" 
-                                  ? "bg-zinc-950/60 border-zinc-800/80 group-hover/item:border-[#00f5b4] group-hover/item:shadow-[0_0_15px_rgba(0,245,180,0.2)]" 
-                                  : "bg-slate-50 border-slate-200 group-hover/item:border-teal-500 group-hover/item:shadow-[0_0_15px_rgba(13,148,136,0.15)]"
-                              }`}>
-                                <img
-                                  src={skill.iconPath}
-                                  alt={skill.name}
-                                  className="h-full w-full object-contain filter group-hover/item:brightness-110"
-                                  referrerPolicy="no-referrer"
-                                />
-                              </div>
-                              <span className={`mt-1.5 text-[10px] sm:text-xs font-semibold tracking-tight font-sans transition-colors text-center ${
-                                theme === "dark"
-                                  ? "text-zinc-300 group-hover/item:text-[#00f5b4]"
-                                  : "text-slate-700 group-hover/item:text-teal-700"
-                              }`}>
-                                {skill.name}
-                              </span>
-                            </motion.div>
-                          ))}
-                        </div>
+                    {/* Header stats row */}
+                    <div className={`flex flex-wrap items-center justify-center gap-6 mb-10 py-4 px-6 rounded-2xl ${
+                      theme === "dark" ? "bg-white/4 border border-white/8" : "bg-slate-50 border border-slate-200"
+                    }`}>
+                      <div className="text-center">
+                        <div className={`text-3xl font-black ${ theme === "dark" ? "text-white" : "text-slate-900" }`}>{totalSkills}</div>
+                        <div className={`text-[10px] uppercase tracking-widest font-bold mt-0.5 ${ theme === "dark" ? "text-zinc-500" : "text-slate-400" }`}>Total Skills</div>
                       </div>
-                    ))}
+                      <div className={`h-8 w-px ${ theme === "dark" ? "bg-white/10" : "bg-slate-200" }`} />
+                      <div className="text-center">
+                        <div className={`text-3xl font-black ${ theme === "dark" ? "text-white" : "text-slate-900" }`}>{techStackCategories.length}</div>
+                        <div className={`text-[10px] uppercase tracking-widest font-bold mt-0.5 ${ theme === "dark" ? "text-zinc-500" : "text-slate-400" }`}>Categories</div>
+                      </div>
+                      <div className={`h-8 w-px ${ theme === "dark" ? "bg-white/10" : "bg-slate-200" }`} />
+                      {techStackCategories.map((cat, i) => (
+                        <div key={i} className="flex items-center gap-2">
+                          <span className="h-2 w-2 rounded-full" style={{ background: cat.accent }} />
+                          <span className={`text-xs font-semibold ${ theme === "dark" ? "text-zinc-400" : "text-slate-500" }`}>{cat.title}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Bento Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                      {techStackCategories.map((category, catIndex) => (
+                        <motion.div
+                          key={catIndex}
+                          initial={{ opacity: 0, y: 30 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true, margin: "-40px" }}
+                          transition={{ duration: 0.5, delay: catIndex * 0.07, ease: "easeOut" }}
+                          className={`group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-1.5 ${
+                            theme === "dark"
+                              ? "bg-gradient-to-b from-[#111827] to-[#0c1220] border border-white/8"
+                              : "bg-white border border-slate-200/80 shadow-sm"
+                          }`}
+                          style={{
+                            boxShadow: theme === "dark"
+                              ? `0 0 0 1px ${category.accent}18, 0 16px 48px rgba(0,0,0,0.35)`
+                              : `0 4px 24px rgba(0,0,0,0.06), 0 0 0 1px ${category.accent}22`
+                          }}
+                        >
+                          {/* Ambient glow on hover */}
+                          <div
+                            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                            style={{ background: `radial-gradient(ellipse at top left, ${category.glow}, transparent 65%)` }}
+                          />
+
+                          {/* Top color accent bar */}
+                          <div className="h-[3px] w-full" style={{ background: `linear-gradient(90deg, ${category.accent}, ${category.accent}50)` }} />
+
+                          {/* Card content */}
+                          <div className="p-5">
+                            {/* Category header */}
+                            <div className="flex items-center gap-3 mb-5">
+                              <div
+                                className="h-9 w-9 rounded-xl flex items-center justify-center text-sm font-black shrink-0 transition-transform duration-300 group-hover:scale-110"
+                                style={{ background: `${category.accent}20`, color: category.accent, border: `1.5px solid ${category.accent}40` }}
+                              >
+                                {category.icon}
+                              </div>
+                              <div>
+                                <h4 className={`font-display text-sm font-extrabold tracking-tight leading-none ${
+                                  theme === "dark" ? "text-white" : "text-slate-900"
+                                }`}>
+                                  {category.title}
+                                </h4>
+                                <p style={{ color: category.accent }} className="text-[10px] font-bold mt-0.5 uppercase tracking-widest">
+                                  {category.skills.length} {category.skills.length === 1 ? "skill" : "skills"}
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Skills icon grid */}
+                            <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+                              {category.skills.map((skill, skillIndex) => (
+                                <motion.div
+                                  key={skillIndex}
+                                  initial={{ opacity: 0, scale: 0.85 }}
+                                  whileInView={{ opacity: 1, scale: 1 }}
+                                  viewport={{ once: true }}
+                                  transition={{ duration: 0.35, delay: catIndex * 0.07 + skillIndex * 0.06 }}
+                                  whileHover={{ scale: 1.1, y: -3 }}
+                                  className="flex flex-col items-center gap-1.5 cursor-pointer group/skill"
+                                >
+                                  <div
+                                    className="h-12 w-12 rounded-xl flex items-center justify-center p-2 transition-all duration-300"
+                                    style={{
+                                      background: theme === "dark" ? "rgba(255,255,255,0.04)" : "#f8fafc",
+                                      border: `1.5px solid ${theme === "dark" ? "rgba(255,255,255,0.08)" : "#e2e8f0"}`
+                                    }}
+                                    onMouseEnter={e => {
+                                      (e.currentTarget as HTMLDivElement).style.border = `1.5px solid ${category.accent}`;
+                                      (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 14px ${category.glow}`;
+                                    }}
+                                    onMouseLeave={e => {
+                                      (e.currentTarget as HTMLDivElement).style.border = `1.5px solid ${theme === "dark" ? "rgba(255,255,255,0.08)" : "#e2e8f0"}`;
+                                      (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
+                                    }}
+                                  >
+                                    <img
+                                      src={skill.iconPath}
+                                      alt={skill.name}
+                                      className="h-full w-full object-contain"
+                                      loading="lazy"
+                                    />
+                                  </div>
+                                  <span
+                                    className={`text-[9px] sm:text-[10px] font-semibold tracking-tight text-center leading-tight transition-colors duration-200 ${
+                                      theme === "dark" ? "text-zinc-400" : "text-slate-500"
+                                    } group-hover/skill:text-[${category.accent}]`}
+                                    style={{} as React.CSSProperties}
+                                    onMouseEnter={e => { (e.currentTarget as HTMLSpanElement).style.color = category.accent; }}
+                                    onMouseLeave={e => { (e.currentTarget as HTMLSpanElement).style.color = ""; }}
+                                  >
+                                    {skill.name}
+                                  </span>
+                                </motion.div>
+                              ))}
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    {/* Scrolling marquee ribbon of all skills */}
+                    <div className={`mt-10 overflow-hidden rounded-2xl py-4 ${
+                      theme === "dark" ? "bg-white/4 border border-white/8" : "bg-slate-50 border border-slate-200"
+                    }`}>
+                      <div
+                        className="flex gap-6 items-center"
+                        style={{
+                          animation: "marquee 28s linear infinite",
+                          width: "max-content"
+                        }}
+                      >
+                        {[...techStackCategories.flatMap(c => c.skills.map(s => ({ ...s, accent: c.accent }))),
+                          ...techStackCategories.flatMap(c => c.skills.map(s => ({ ...s, accent: c.accent })))]
+                          .map((skill, i) => (
+                            <div key={i} className="flex items-center gap-2 shrink-0 px-3 py-1.5 rounded-full" style={{ background: `${skill.accent}15`, border: `1px solid ${skill.accent}30` }}>
+                              <img src={skill.iconPath} alt={skill.name} className="h-4 w-4 object-contain" loading="lazy" />
+                              <span className="text-[11px] font-bold whitespace-nowrap" style={{ color: skill.accent }}>{skill.name}</span>
+                            </div>
+                          ))
+                        }
+                      </div>
+                    </div>
+
+                    <style>{`
+                      @keyframes marquee {
+                        0% { transform: translateX(0); }
+                        100% { transform: translateX(-50%); }
+                      }
+                    `}</style>
+
                   </motion.div>
                 )}
 
