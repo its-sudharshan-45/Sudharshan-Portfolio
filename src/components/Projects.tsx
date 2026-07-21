@@ -67,7 +67,7 @@ function CertificateCard({ cert, theme, index }: CertificateCardProps) {
       <div
         className={`relative rounded-2xl border overflow-hidden shadow-2xl transition-all duration-500 group-hover:-translate-y-2 ${
           theme === "dark"
-            ? "border-white/8 bg-gradient-to-b from-[#111827] to-[#0c1220]"
+            ? "border-white/8 bg-linear-to-b from-[#111827] to-[#0c1220]"
             : "border-slate-200/80 bg-white"
         }`}
         style={{ boxShadow: theme === "dark" ? `0 0 0 1px ${cert.accentColor}20, 0 20px 60px rgba(0,0,0,0.4)` : `0 4px 30px rgba(0,0,0,0.08), 0 0 0 1px ${cert.accentColor}30` }}
@@ -331,7 +331,7 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
       category: "Data Science",
       accentColor: "#f59e0b",
       element: (
-        <div className="relative w-full h-full bg-[#fdfbf7] border-[8px] bg-gradient-to-b from-[#fdfbf6] to-[#faf3da] border-[#a17e3b] p-3 flex flex-col justify-between font-sans text-neutral-800 rounded-xl overflow-hidden shadow-2xl">
+        <div className="relative w-full h-full bg-[#fdfbf7] border-8 bg-linear-to-b from-[#fdfbf6] to-[#faf3da] border-[#a17e3b] p-3 flex flex-col justify-between font-sans text-neutral-800 rounded-xl overflow-hidden shadow-2xl">
           {/* Logo Headers */}
           <div className="flex justify-between items-center border-b border-[#a17e3b]/15 pb-1">
             <span className="text-[5px] font-black text-[#a17e3b] tracking-wider uppercase">NPTEL Online Certification</span>
@@ -346,7 +346,7 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
             <div className="text-[3.5px] text-zinc-400 mt-1">Conducted by Elite Faculty members from IIT Roorkee</div>
           </div>
           {/* Gold badge seal */}
-          <div className="absolute right-3.5 bottom-8 h-8 w-8 rounded-full bg-gradient-to-tr from-amber-600 to-yellow-400 p-0.5 border border-amber-700/50 shadow flex items-center justify-center animate-pulse-slow">
+          <div className="absolute right-3.5 bottom-8 h-8 w-8 rounded-full bg-linear-to-tr from-amber-600 to-yellow-400 p-0.5 border border-amber-700/50 shadow flex items-center justify-center animate-pulse-slow">
             <div className="h-full w-full rounded-full border border-dashed border-white/80 flex items-center justify-center text-[4px] font-black text-amber-950 font-serif uppercase text-center scale-[0.95]">ELITE</div>
           </div>
           {/* Bottom */}
@@ -368,7 +368,7 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
       category: "Cyber Security",
       accentColor: "#06b6d4",
       element: (
-        <div className="relative w-full h-full bg-[#f4fbfc] border-[8px] bg-gradient-to-b from-[#f4fbfc] to-[#e6f4f7] border-[#1b4e5a] p-3 flex flex-col justify-between font-sans text-neutral-800 rounded-xl overflow-hidden shadow-2xl">
+        <div className="relative w-full h-full bg-[#f4fbfc] border-8 bg-linear-to-b from-[#f4fbfc] to-[#e6f4f7] border-[#1b4e5a] p-3 flex flex-col justify-between font-sans text-neutral-800 rounded-xl overflow-hidden shadow-2xl">
           {/* Header */}
           <div className="flex justify-between items-center border-b border-[#1b4e5a]/15 pb-1">
             <span className="text-[5px] font-black text-[#1b4e5a] tracking-wider uppercase">NPTEL Elite Certification</span>
@@ -382,7 +382,7 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
             <div className="text-[8.5px] font-extrabold text-[#114b5f] leading-tight">Practical Cyber Security <br/>for Cyber Security Practitioners</div>
           </div>
           {/* Seal */}
-          <div className="absolute right-4 bottom-8 h-8 w-8 rounded-full bg-gradient-to-tr from-cyan-600 to-[#1b4e5a] p-0.5 border border-cyan-800 shadow flex items-center justify-center">
+          <div className="absolute right-4 bottom-8 h-8 w-8 rounded-full bg-linear-to-tr from-cyan-600 to-[#1b4e5a] p-0.5 border border-cyan-800 shadow flex items-center justify-center">
             <div className="h-full w-full rounded-full border border-dashed border-white/80 flex items-center justify-center text-[4px] font-black text-white font-serif uppercase text-center scale-[0.95]">IIT SEC</div>
           </div>
           {/* Bottom */}
@@ -404,9 +404,9 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
       category: "Internship",
       accentColor: "#10b981",
       element: (
-        <div className="relative w-full h-full bg-[#fafbfd] border-[8px] bg-gradient-to-b from-[#fafbfd] to-[#edf3fa] border-[#0c2a4a] p-3 flex flex-col justify-between font-sans text-neutral-800 rounded-xl overflow-hidden shadow-2xl">
+        <div className="relative w-full h-full bg-[#fafbfd] border-8 bg-linear-to-b from-[#fafbfd] to-[#edf3fa] border-[#0c2a4a] p-3 flex flex-col justify-between font-sans text-neutral-800 rounded-xl overflow-hidden shadow-2xl">
           {/* Diagonal ribbon */}
-          <div className="absolute top-1 left-1.5 bg-[#00f5b4] border border-[#0c2a4a] text-slate-950 font-black text-[4.5px] px-1.5 py-0.5 uppercase tracking-wider rounded-xs shadow rotate-[-6deg] z-10">
+          <div className="absolute top-1 left-1.5 bg-[#00f5b4] border border-[#0c2a4a] text-slate-950 font-black text-[4.5px] px-1.5 py-0.5 uppercase tracking-wider rounded-xs shadow -rotate-6 z-10">
             Verified Intern
           </div>
           {/* Header */}
@@ -418,7 +418,7 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
           <div className="text-center space-y-1.5 my-auto">
             <div className="text-[4px] uppercase tracking-widest text-[#0c2a4a]/70 font-semibold">Certificate of Internship Completion</div>
             <div className="text-[11px] font-serif font-black text-[#051c33] uppercase tracking-wide">Sudharshan N</div>
-            <p className="text-[4.5px] text-zinc-500 leading-normal max-w-[190px] mx-auto">
+            <p className="text-[4.5px] text-zinc-500 leading-normal max-w-47.5 mx-auto">
               Successfully completed work as a <span className="font-bold text-[#0c2a4a]">Full Stack Intern</span> designing React apps, managing scalable APIs, and building fluid user flows.
             </p>
           </div>
@@ -441,7 +441,7 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
       category: "Internship",
       accentColor: "#10b981",
       element: (
-        <div className="relative w-full h-full bg-[#fdfdfd] border-[8px] bg-gradient-to-b from-white to-[#f4f7f6] border-[#083327] p-3 flex flex-col justify-between font-sans text-neutral-800 rounded-xl overflow-hidden shadow-2xl">
+        <div className="relative w-full h-full bg-[#fdfdfd] border-8 bg-linear-to-b from-white to-[#f4f7f6] border-[#083327] p-3 flex flex-col justify-between font-sans text-neutral-800 rounded-xl overflow-hidden shadow-2xl">
           {/* Header */}
           <div className="flex justify-between items-center border-b border-[#083327]/10 pb-1">
             <span className="text-[5.5px] font-black text-[#083327] tracking-tight">Codec Technologies</span>
@@ -451,7 +451,7 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
           <div className="text-center space-y-1 my-auto">
             <div className="text-[4px] uppercase tracking-widest text-[#083327]/70 font-semibold">INTERNSHIP COMPLETION AWARD</div>
             <div className="text-[11px] font-serif font-black text-emerald-950 uppercase tracking-wide">SUDHARSHAN N</div>
-            <p className="text-[4.5px] text-zinc-500 leading-normal max-w-[190px] mx-auto">
+            <p className="text-[4.5px] text-zinc-500 leading-normal max-w-47.5 mx-auto">
               Recognized for outstanding work and dedication in engineering robust cloud backend systems and interactive Vite architectures as our <span className="font-bold text-[#083327]">Full Stack Developer Intern</span>.
             </p>
           </div>
@@ -547,8 +547,8 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
     }`}>
       {/* Decorative Cyan Radial Atmosphere */}
       <div className="absolute inset-0 pointer-events-none opacity-20">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-teal-500/10 blur-3xl" />
-        <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-emerald-500/5 blur-3xl" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-125 h-125 rounded-full bg-teal-500/10 blur-3xl" />
+        <div className="absolute bottom-1/4 left-1/4 w-100 h-100 rounded-full bg-emerald-500/5 blur-3xl" />
       </div>
 
       <motion.div
@@ -614,7 +614,7 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
                           {selectedProject.title}
                         </h1>
                         {/* Teal short divider line underneath title */}
-                        <div className={`h-[5px] w-[70px] rounded-full ${theme === "dark" ? "bg-[#00f5b4]" : "bg-teal-600"}`} />
+                        <div className={`h-1.25 w-17.5 rounded-full ${theme === "dark" ? "bg-[#00f5b4]" : "bg-teal-600"}`} />
                       </div>
 
                       {/* Long Description paragraph */}
@@ -733,7 +733,7 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
                       }`}>
                         <div className="relative w-full mx-auto scale-100">
                           {/* Screen shell */}
-                          <div className="relative flex-1 aspect-[16/10] w-full overflow-hidden rounded-t-xl bg-[#090b11] p-1.5 shadow-2xl border-[3px] border-[#334155]/80">
+                          <div className="relative flex-1 aspect-16/10 w-full overflow-hidden rounded-t-xl bg-[#090b11] p-1.5 shadow-2xl border-[3px] border-[#334155]/80">
                             <div className="h-full w-full overflow-hidden rounded bg-slate-950 flex flex-col relative">
                               {selectedProject.imageUrl ? (
                                 <img src={selectedProject.imageUrl} alt={selectedProject.title} className="w-full h-full object-cover" />
@@ -743,7 +743,7 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
                             </div>
                           </div>
                           {/* Laptop lower base frame */}
-                          <div className="relative h-2 sm:h-2.5 w-[114%] -left-[7%] bg-gradient-to-b from-[#64748b] to-[#334155] rounded-b-lg shadow-xl border-t border-[#94a3b8]">
+                          <div className="relative h-2 sm:h-2.5 w-[114%] left-[-7%] bg-linear-to-b from-[#64748b] to-[#334155] rounded-b-lg shadow-xl border-t border-[#94a3b8]">
                             <div className="absolute left-1/2 top-0 h-1 w-12 -translate-x-1/2 rounded-b bg-[#1e293b]" />
                           </div>
                         </div>
@@ -874,14 +874,14 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
                         }`}
                       >
                         {/* Laptop Mockup Wrapper inside of card */}
-                        <div className={`relative w-full aspect-[16/10] rounded-xl flex items-center justify-center p-3 xs:p-4 sm:p-6 border mb-5 overflow-hidden select-none transition-colors ${
+                        <div className={`relative w-full aspect-16/10 rounded-xl flex items-center justify-center p-3 xs:p-4 sm:p-6 border mb-5 overflow-hidden select-none transition-colors ${
                           theme === "dark" ? "bg-zinc-900/60 border-zinc-800/30" : "bg-slate-50 border-slate-100"
                         }`}>
                           
                           {/* CSS Laptop Frame */}
-                          <div className="relative w-full max-w-[320px] xs:max-w-[340px] sm:max-w-[390px] mx-auto scale-95 hover:scale-[1.01] transition-transform duration-300">
+                          <div className="relative w-full max-w-[320px] xs:max-w-[340px] sm:max-w-97.5 mx-auto scale-95 hover:scale-[1.01] transition-transform duration-300">
                             {/* Screen Bezel */}
-                            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-t-xl bg-[#090b11] p-1.5 shadow-2xl border-[3px] border-[#334155]/80">
+                            <div className="relative aspect-16/10 w-full overflow-hidden rounded-t-xl bg-[#090b11] p-1.5 shadow-2xl border-[3px] border-[#334155]/80">
                               {/* Screen Content */}
                               <div className="h-full w-full overflow-hidden rounded bg-slate-950 flex flex-col relative">
                                 {project.imageUrl ? (
@@ -892,7 +892,7 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
                               </div>
                             </div>
                             {/* Keyboard Base and Lip notch */}
-                            <div className="relative h-2 w-[114%] -left-[7%] bg-gradient-to-b from-[#64748b] to-[#334155] rounded-b-lg shadow-xl border-t border-[#94a3b8]">
+                            <div className="relative h-2 w-[114%] left-[-7%] bg-linear-to-b from-[#64748b] to-[#334155] rounded-b-lg shadow-xl border-t border-[#94a3b8]">
                               <div className="absolute left-1/2 top-0 h-1 w-12 -translate-x-1/2 rounded-b bg-[#1e293b]" />
                             </div>
                           </div>
@@ -937,8 +937,8 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
                               }}
                               className={`flex items-center gap-1 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all shadow-sm cursor-pointer ${
                                 theme === "dark"
-                                  ? "bg-zinc-800 hover:bg-zinc-705 bg-zinc-800 hover:bg-zinc-700/80 text-zinc-300 hover:text-white"
-                                  : "bg-slate-100 hover:bg-slate-205 bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-800"
+                                  ? "bg-zinc-800 hover:bg-zinc-700/80 text-zinc-300 hover:text-white"
+                                  : "bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-800"
                               }`}
                             >
                               <span>Details</span>
@@ -1040,7 +1040,7 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
                           transition={{ duration: 0.5, delay: catIndex * 0.07, ease: "easeOut" }}
                           className={`group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-1.5 ${
                             theme === "dark"
-                              ? "bg-gradient-to-b from-[#111827] to-[#0c1220] border border-white/8"
+                              ? "bg-linear-to-b from-[#111827] to-[#0c1220] border border-white/8"
                               : "bg-white border border-slate-200/80 shadow-sm"
                           }`}
                           style={{
@@ -1056,7 +1056,7 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
                           />
 
                           {/* Top color accent bar */}
-                          <div className="h-[3px] w-full" style={{ background: `linear-gradient(90deg, ${category.accent}, ${category.accent}50)` }} />
+                          <div className="h-0.75 w-full" style={{ background: `linear-gradient(90deg, ${category.accent}, ${category.accent}50)` }} />
 
                           {/* Card content */}
                           <div className="p-5">
