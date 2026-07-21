@@ -41,8 +41,8 @@ export default function Hero({ onOpenContact, onNavigate, theme = "light" }: Her
     >
       {/* Dynamic Ambient Background Glows */}
       <div className="absolute inset-0 pointer-events-none opacity-20">
-        <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-teal-500/10 blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] rounded-full bg-emerald-500/10 blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-100 h-100 rounded-full bg-teal-500/10 blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/3 right-1/4 w-125 h-125 rounded-full bg-emerald-500/10 blur-3xl" />
       </div>
 
       <motion.div
@@ -75,9 +75,9 @@ export default function Hero({ onOpenContact, onNavigate, theme = "light" }: Her
               theme === "dark" ? "text-teal-400" : "text-teal-600"
             }`}
           >
-            <Sparkles size={14} className={`flex-shrink-0 animate-pulse ${theme === "dark" ? "text-[#00f5b4]" : "text-teal-650 text-teal-600"}`} />
+            <Sparkles size={14} className={`shrink-0 animate-pulse ${theme === "dark" ? "text-[#00f5b4]" : "text-teal-650 text-teal-600"}`} />
             <span className="opacity-90">Turning Vision into Intelligent Solutions</span>
-            <Sparkles size={14} className={`flex-shrink-0 animate-pulse ${theme === "dark" ? "text-[#00f5b4]" : "text-teal-650 text-teal-600"}`} />
+            <Sparkles size={14} className={`shrink-0 animate-pulse ${theme === "dark" ? "text-[#00f5b4]" : "text-teal-650 text-teal-600"}`} />
           </motion.p>
         </div>
 
@@ -166,10 +166,10 @@ export default function Hero({ onOpenContact, onNavigate, theme = "light" }: Her
             >
               {/* Intense cyan/teal backing glows match the image glow */}
               <div className="absolute inset-0 rounded-full bg-teal-500/25 blur-3xl scale-125 pointer-events-none" />
-              <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-teal-400/40 to-emerald-500/10 blur-xl opacity-80 pointer-events-none" />
+              <div className="absolute -inset-1 rounded-full bg-linear-to-tr from-teal-400/40 to-emerald-500/10 blur-xl opacity-80 pointer-events-none" />
               
               {/* Main Portrait Circle */}
-              <div className={`relative aspect-square w-[220px] h-[220px] xs:w-[260px] xs:h-[260px] sm:w-[310px] sm:h-[310px] md:w-[280px] md:h-[280px] lg:w-[360px] lg:h-[360px] overflow-hidden rounded-full border-4 shadow-2xl flex items-center justify-center transition-all duration-300 ${
+              <div className={`relative aspect-square w-55 h-55 xs:w-[260px] xs:h-[260px] sm:w-77.5 sm:h-77.5 md:w-70 md:h-70 lg:w-90 lg:h-90 overflow-hidden rounded-full border-4 shadow-2xl flex items-center justify-center transition-all duration-300 ${
                 theme === "dark"
                   ? "border-teal-500/40 shadow-[0_0_50px_rgba(45,212,191,0.25)] bg-slate-900"
                   : "border-teal-600/35 shadow-[0_0_50px_rgba(13,148,136,0.1)] bg-white"
