@@ -15,8 +15,8 @@ export default function Education({ theme = "light" }: EducationProps) {
     >
       {/* Decorative Cyan Radial Glow */}
       <div className="absolute inset-0 pointer-events-none opacity-20">
-        <div className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] rounded-full bg-teal-500/10 blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] rounded-full bg-cyan-500/10 blur-3xl" />
+        <div className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-87.5 sm:w-125 h-87.5 sm:h-125 rounded-full bg-teal-500/10 blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-100 sm:w-150 h-100 sm:h-150 rounded-full bg-cyan-500/10 blur-3xl" />
       </div>
 
       <motion.div
@@ -46,7 +46,7 @@ export default function Education({ theme = "light" }: EducationProps) {
         {/* Timeline Path Container - Perfectly styled to reproduce the image */}
         <div className="relative mx-auto max-w-5xl">
           {/* Vertical Teal Line: Exactly centered on desktop, left-aligned on mobile */}
-          <div className={`absolute left-6 md:left-1/2 top-0 bottom-0 w-[3px] -translate-x-1/2 ${
+          <div className={`absolute left-6 md:left-1/2 top-0 bottom-0 w-0.75 -translate-x-1/2 ${
             theme === "dark" ? "bg-teal-400" : "bg-teal-500"
           }`} />
 
