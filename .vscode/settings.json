@@ -1,3 +1,29 @@
 {
-  "css.lint.unknownAtRules": "ignore"
+  "css.lint.unknownAtRules": "ignore",
+  "cSpell.words": [
+    "Bento",
+    "CGPA",
+    "codechef",
+    "codectech",
+    "Groq",
+    "interactable",
+    "Matplotlib",
+    "nptel",
+    "NPTEL",
+    "onedot",
+    "Palladam",
+    "Roorkee",
+    "scikit",
+    "Scikit",
+    "SSLC",
+    "sudharsmarty",
+    "Sudharshan",
+    "SUDHARSHAN",
+    "Supabase",
+    "swayam",
+    "Tesseract",
+    "Tiruppur",
+    "Vikas",
+    "Vidyalaya"
+  ]
 }
