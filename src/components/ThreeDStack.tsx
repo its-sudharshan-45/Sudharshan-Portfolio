@@ -56,7 +56,7 @@ export default function ThreeDStack({ theme = "dark" }: ThreeDStackProps) {
       
       {/* PARALLAX SHIFTING GRAPHICS BOX */}
       <div
-        className="relative w-full max-w-[340px] xs:max-w-[400px] sm:max-w-[480px] lg:max-w-[520px] aspect-[1.2] transition-transform duration-300 ease-out preserve-3d"
+        className="relative w-full max-w-85 xs:max-w-[400px] sm:max-w-120 lg:max-w-130 aspect-[1.2] transition-transform duration-300 ease-out preserve-3d"
         style={{
           transform: `rotateX(${-coords.y * 12}deg) rotateY(${coords.x * 12}deg) translateZ(0)`,
         }}
