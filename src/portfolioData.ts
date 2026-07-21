@@ -16,7 +16,7 @@ export const portfolioData: PortfolioData = {
   name: "Sudharshan N",
   title: "Full Stack Developer",
   imagePath: "/Images/profile.jpeg",
-  resumeUrl: "https://drive.google.com/file/d/1a3p7-eNpxSNbBtOQ5wAD2UhTTkkS3Gsk/view?usp=drive_link",
+  resumeUrl: "https://drive.google.com/file/d/1K9Bf4R4Hw7zOAeMNSC9v6cOUGHhCC5dA/view?usp=drive_link",
   email: "its.sudharshan.in@gmail.com",
   socials: {
     github: "https://github.com/its-sudharshan-45",
