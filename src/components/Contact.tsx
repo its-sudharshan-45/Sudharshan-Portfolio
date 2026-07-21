@@ -67,10 +67,10 @@ export default function Contact({ theme = "dark" }: ContactProps) {
       {/* Immersive background decoration (matching the gradient look of the screenshot) */}
       <div className="absolute top-0 bottom-0 left-0 right-0 pointer-events-none select-none z-0">
         {/* Left deep purple/indigo ambient glow */}
-        <div className="absolute top-1/4 left-0 w-[40rem] h-[40rem] -translate-x-1/2 -translate-y-1/4 rounded-full bg-indigo-900/15 blur-[120px]" />
+        <div className="absolute top-1/4 left-0 w-160 h-160 -translate-x-1/2 -translate-y-1/4 rounded-full bg-indigo-900/15 blur-[120px]" />
         
         {/* Right deep cyan/teal ambient glow */}
-        <div className="absolute bottom-1/4 right-0 w-[40rem] h-[40rem] translate-x-1/2 translate-y-1/4 rounded-full bg-teal-950/15 blur-[120px]" />
+        <div className="absolute bottom-1/4 right-0 w-160 h-160 translate-x-1/2 translate-y-1/4 rounded-full bg-teal-950/15 blur-[120px]" />
       </div>
 
       <motion.div
@@ -89,7 +89,7 @@ export default function Contact({ theme = "dark" }: ContactProps) {
 
         <div className="rounded-3xl border border-zinc-850/60 bg-[#0d1421] p-6 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
           {/* Subtle upper glow effect inside card */}
-          <div className="absolute -top-[150px] left-1/2 -translate-x-1/2 w-80 h-40 bg-[#00f5b4]/5 rounded-full blur-[40px] pointer-events-none" />
+          <div className="absolute -top-37.5 left-1/2 -translate-x-1/2 w-80 h-40 bg-[#00f5b4]/5 rounded-full blur-2xl pointer-events-none" />
 
           {/* Form Header */}
           <div className="flex justify-between items-start mb-6">
@@ -234,7 +234,7 @@ export default function Contact({ theme = "dark" }: ContactProps) {
                 </>
               ) : (
                 <>
-                  <Send size={15} className="mt-[-1px]" />
+                  <Send size={15} className="-mt-px" />
                   <span>Send Message</span>
                 </>
               )}
