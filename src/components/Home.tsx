@@ -58,17 +58,17 @@ export default function Home({ onOpenContact, onNavigate, theme = "light" }: Hom
       {/* Background Gradients and Glows - Matching home.png */}
       <div className="absolute inset-0 pointer-events-none select-none z-0">
         {/* Left deep purple glow */}
-        <div className={`absolute top-1/4 left-0 w-[45rem] h-[45rem] -translate-x-[35%] -translate-y-1/4 rounded-full blur-[130px] transition-all ${
+        <div className={`absolute top-1/4 left-0 w-180 h-180 translate-x-[-35%] -translate-y-1/4 rounded-full blur-[130px] transition-all ${
           theme === "dark" ? "bg-indigo-950/20" : "bg-indigo-400/5"
         }`} />
         
         {/* Central blue tint */}
-        <div className={`absolute top-1/2 left-1/3 w-[35rem] h-[35rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[110px] transition-all ${
+        <div className={`absolute top-1/2 left-1/3 w-140 h-140 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[110px] transition-all ${
           theme === "dark" ? "bg-blue-950/10" : "bg-blue-400/5"
         }`} />
 
         {/* Right deep cyan/teal glow behind the illustration */}
-        <div className={`absolute bottom-1/4 right-0 w-[50rem] h-[50rem] translate-x-[25%] translate-y-1/4 rounded-full blur-[140px] transition-all ${
+        <div className={`absolute bottom-1/4 right-0 w-200 h-200 translate-x-[25%] translate-y-1/4 rounded-full blur-[140px] transition-all ${
           theme === "dark" ? "bg-teal-950/15" : "bg-teal-400/5"
         }`} />
       </div>
@@ -101,9 +101,9 @@ export default function Home({ onOpenContact, onNavigate, theme = "light" }: Hom
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.15 }}
-                className={`block bg-gradient-to-r ${
+                className={`block bg-linear-to-r ${
                   theme === "dark" 
-                    ? "from-teal-400 via-[#00f5b4] to-[#00f5b4] to-emerald-400 drop-shadow-[0_0_35px_rgba(0,245,180,0.3)]" 
+                    ? "from-teal-400 via-[#00f5b4] to-emerald-400 drop-shadow-[0_0_35px_rgba(0,245,180,0.3)]" 
                     : "from-teal-600 via-[#0dbc95] to-emerald-600 drop-shadow-[0_0_20px_rgba(13,188,149,0.15)]"
                 } bg-clip-text text-transparent filter`}
               >
@@ -245,7 +245,7 @@ export default function Home({ onOpenContact, onNavigate, theme = "light" }: Hom
           </div>
 
           {/* Right Side 3D Interactive Stack Column */}
-          <div className="lg:col-span-5 flex items-center justify-center order-1 lg:order-2 w-full max-w-[325px] sm:max-w-[420px] lg:max-w-none mx-auto">
+          <div className="lg:col-span-5 flex items-center justify-center order-1 lg:order-2 w-full max-w-81.25 sm:max-w-105 lg:max-w-none mx-auto">
             <motion.div
               initial={{ opacity: 0, scale: 0.93 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -255,7 +255,7 @@ export default function Home({ onOpenContact, onNavigate, theme = "light" }: Hom
             >
               {/* Animated backdrop grid lines and glows */}
               <div className="absolute inset-0 rounded-full bg-teal-500/5 blur-3xl pointer-events-none scale-110" />
-              <div className="absolute w-[280px] h-[280px] rounded-full bg-indigo-500/5 blur-2xl pointer-events-none" />
+              <div className="absolute w-70 h-70 rounded-full bg-indigo-500/5 blur-2xl pointer-events-none" />
               
               {/* Isometric responsive interactable Tech Stack component */}
               <ThreeDStack theme={theme} />
