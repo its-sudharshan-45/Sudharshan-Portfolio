@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { ArrowUpRight, Mail, Github, Linkedin, Sparkles, Instagram } from "lucide-react";
-import { portfolioData } from "../portfolioData.ts";
-import ThreeDStack from "./ThreeDStack.tsx";
+import { ArrowUpRight, Mail, Github, Linkedin, Instagram } from "lucide-react";
+import { portfolioData } from "../portfolioData";
+import ThreeDStack from "./ThreeDStack";
 
 interface HomeProps {
   onOpenContact: () => void;
@@ -179,7 +179,7 @@ export default function Home({ onOpenContact, onNavigate, theme = "light" }: Hom
               </button>
 
               <button
-                onClick={() => onNavigate("contact")}
+                onClick={() => onOpenContact()}
                 className={`flex items-center gap-2 rounded-lg border-2 px-8 py-3.5 text-sm font-semibold hover:-translate-y-0.5 active:scale-97 transition-all duration-300 cursor-pointer ${
                   theme === "dark"
                     ? "border-[#00f5b4]/35 bg-[#09111e]/90 text-white hover:text-[#00f5b4] hover:border-[#00f5b4]/85 shadow-[0_0_20px_rgba(0,245,180,0.15)] hover:shadow-[0_0_30px_rgba(0,245,180,0.4)]"
