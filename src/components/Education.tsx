@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+﻿import { motion } from "motion/react";
 import { Code, Globe, ArrowUpRight, Award } from "lucide-react";
 
 interface EducationProps {
