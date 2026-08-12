@@ -10,6 +10,7 @@ import Projects from "./components/Projects.tsx";
 import Education from "./components/Education.tsx";
 import ContactModal from "./components/ContactModal.tsx";
 import CustomCursor from "./components/CustomCursor.tsx";
+import IntroScreen from "./components/IntroScreen.tsx";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState("home");
@@ -120,6 +121,9 @@ export default function App() {
           : "bg-[#f8fafc] text-slate-800 selection:text-slate-900"
       }`}
     >
+      {/* 2-second intro / loading overlay */}
+      <IntroScreen theme={theme} />
+
       {/* Premium Custom Glowing Interactive Cursor */}
       <CustomCursor theme={theme} />
       
