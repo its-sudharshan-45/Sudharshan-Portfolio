@@ -11,6 +11,7 @@ interface HomeProps {
 }
 
 export default function Home({ onOpenContact, onNavigate, theme = "light" }: HomeProps) {
+  // ── Subtitle ticker (AI Explorer / Web Developer / Tech Enthusiast) ──────────
   const [currentText, setCurrentText] = useState("");
   const titles = ["AI Explorer", "Web Developer", "Tech Enthusiast"];
   const [loopNum, setLoopNum] = useState(0);
@@ -28,8 +29,8 @@ export default function Home({ onOpenContact, onNavigate, theme = "light" }: Hom
   const tick = () => {
     const i = loopNum % titles.length;
     const fullText = titles[i];
-    const updatedText = isDeleting 
-      ? fullText.substring(0, currentText.length - 1) 
+    const updatedText = isDeleting
+      ? fullText.substring(0, currentText.length - 1)
       : fullText.substring(0, currentText.length + 1);
 
     setCurrentText(updatedText);
@@ -47,6 +48,61 @@ export default function Home({ onOpenContact, onNavigate, theme = "light" }: Hom
       setDelta(250); // Pause before next word
     }
   };
+
+  // ── Hero heading two-phase typing animation ───────────────────────────────────
+  // Phase 0 → type line1A then line2A → hold 3 s → phase 1
+  // Phase 1 → type line1B then line2B → hold 3 s → phase 0
+  const PHASES = [
+    { line1: "Hey there,",  line2: "I'm Sudharshan" },
+    { line1: "Full Stack",  line2: "Enthusiast"     },
+  ] as const;
+  const TYPING_SPEED  = 70;  // ms per character (forward)
+  const HOLD_DURATION = 3000; // ms to hold after fully typed
+
+  const [heroPhase,  setHeroPhase]  = useState(0);
+  const [heroLine1,  setHeroLine1]  = useState("");
+  const [heroLine2,  setHeroLine2]  = useState("");
+  // stage: 0 = typing line1, 1 = typing line2, 2 = holding
+  const [heroStage,  setHeroStage]  = useState<0 | 1 | 2>(0);
+
+  useEffect(() => {
+    const { line1, line2 } = PHASES[heroPhase];
+
+    if (heroStage === 0) {
+      // Typing line 1
+      if (heroLine1.length < line1.length) {
+        const t = setTimeout(
+          () => setHeroLine1(line1.substring(0, heroLine1.length + 1)),
+          TYPING_SPEED,
+        );
+        return () => clearTimeout(t);
+      } else {
+        // line 1 done → start line 2
+        setHeroStage(1);
+      }
+    } else if (heroStage === 1) {
+      // Typing line 2
+      if (heroLine2.length < line2.length) {
+        const t = setTimeout(
+          () => setHeroLine2(line2.substring(0, heroLine2.length + 1)),
+          TYPING_SPEED,
+        );
+        return () => clearTimeout(t);
+      } else {
+        // both lines done → hold
+        setHeroStage(2);
+      }
+    } else {
+      // Holding — wait then switch phase and reset
+      const t = setTimeout(() => {
+        setHeroPhase((p) => (p + 1) % PHASES.length);
+        setHeroLine1("");
+        setHeroLine2("");
+        setHeroStage(0);
+      }, HOLD_DURATION);
+      return () => clearTimeout(t);
+    }
+  }, [heroPhase, heroStage, heroLine1, heroLine2]);
 
   const skills = portfolioData.skills;
 
@@ -85,30 +141,56 @@ export default function Home({ onOpenContact, onNavigate, theme = "light" }: Hom
           {/* Left Side Content Block */}
           <div className="lg:col-span-7 flex flex-col items-start text-left order-2 lg:order-1 pt-4 lg:pt-0 pl-3 sm:pl-6 md:pl-12">
 
-            {/* Giant Display Title */}
-            <h1 className="font-sans tracking-tight leading-[0.92] text-left select-none text-4xl xs:text-5xl sm:text-[62px] md:text-[74px] lg:text-[78px] xl:text-[86px] font-black">
-              <motion.span
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.05 }}
-                className={`block transition-colors ${theme === "dark" ? "text-white" : "text-slate-900"}`}
+            {/* Giant Display Title — animated two-phase typing */}
+            <h1
+              aria-label="Hero heading"
+              className="font-sans tracking-tight leading-[0.92] text-left select-none text-[32px] xs:text-[44px] sm:text-[58px] md:text-[70px] lg:text-[74px] xl:text-[82px] font-black"
+              /* Fixed height so nothing below shifts during typing.
+                 1em ≈ font-size; two lines at leading-[0.92] need ~1.92em each
+                 plus a little breathing room.  We use min-h so it never collapses. */
+              style={{ minHeight: "1.92em" }}
+            >
+              {/* Line 1 */}
+              <span
+                className={`block transition-colors ${
+                  heroPhase === 0
+                    ? (theme === "dark" ? "text-white" : "text-slate-900")
+                    : (theme === "dark" ? "text-white" : "text-slate-900")
+                }`}
               >
-                Full Stack
-              </motion.span>
-              <motion.span
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.15 }}
-                className={`block bg-linear-to-r ${
-                  theme === "dark" 
-                    ? "from-teal-400 via-[#00f5b4] to-emerald-400 drop-shadow-[0_0_35px_rgba(0,245,180,0.3)]" 
+                {heroLine1}
+                {/* blinking cursor only while line 1 is still being typed */}
+                {heroStage === 0 && (
+                  <span
+                    className={`inline-block w-0.75 ml-1 align-middle animate-pulse ${
+                      theme === "dark" ? "bg-[#00f5b4]" : "bg-teal-500"
+                    }`}
+                    style={{ height: "0.82em" }}
+                  />
+                )}
+              </span>
+
+              {/* Line 2 — teal accent (matches original "Developer" style) */}
+              <span
+                className={`block bg-linear-to-r bg-clip-text text-transparent filter ${
+                  theme === "dark"
+                    ? "from-teal-400 via-[#00f5b4] to-emerald-400 drop-shadow-[0_0_35px_rgba(0,245,180,0.3)]"
                     : "from-teal-600 via-[#0dbc95] to-emerald-600 drop-shadow-[0_0_20px_rgba(13,188,149,0.15)]"
-                } bg-clip-text text-transparent filter`}
+                }`}
               >
-                Developer
-              </motion.span>
+                {heroLine2}
+                {/* blinking cursor while line 2 is being typed or holding */}
+                {(heroStage === 1 || heroStage === 2) && heroLine2.length > 0 && (
+                  <span
+                    className={`inline-block w-0.75 ml-1 align-middle ${
+                      heroStage === 2 ? "animate-pulse" : ""
+                    } ${
+                      theme === "dark" ? "bg-[#00f5b4]" : "bg-teal-500"
+                    }`}
+                    style={{ height: "0.82em" }}
+                  />
+                )}
+              </span>
             </h1>
 
             {/* Subtitle / cursor line exactly as in home.png */}
