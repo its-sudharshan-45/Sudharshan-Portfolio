@@ -1,6 +1,6 @@
 import React, { useState, ReactNode } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Terminal, Layers, ExternalLink, ArrowRight, Code, Cpu, ArrowLeft, Star, Github, Award, FileText, Link2, BadgeCheck, Calendar, Hash } from "lucide-react";
+import { Terminal, Layers, ExternalLink, ArrowRight, Code, Cpu, ArrowLeft, Star, Github, Award } from "lucide-react";
 
 // Project Type Definition
 interface Project {
@@ -27,15 +27,8 @@ interface ProjectsProps {
 interface Certificate {
   id: string;
   title: string;
-  issuer: string;
-  date: string;
-  credId: string;
   pdfUrl: string;
   imageUrl: string;
-  driveUrl?: string;
-  category: string;
-  accentColor: string;
-  element: ReactNode;
 }
 
 interface CertificateCardProps {
@@ -46,148 +39,75 @@ interface CertificateCardProps {
 }
 
 function CertificateCard({ cert, theme, index }: CertificateCardProps) {
-  const [flipped, setFlipped] = useState(false);
+  const targetUrl = cert.pdfUrl;
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.55, delay: index * 0.1, ease: "easeOut" }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.4, delay: index * 0.08, ease: "easeOut" }}
       className="group relative"
-      style={{ perspective: "1200px" }}
     >
       {/* Ambient glow halo */}
       <div
-        className="absolute -inset-1 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl pointer-events-none"
-        style={{ background: `radial-gradient(ellipse at center, ${cert.accentColor}40, transparent 70%)` }}
+        className="absolute -inset-0.5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-lg pointer-events-none"
+        style={{ background: `radial-gradient(circle at center, ${theme === "dark" ? "#00f5b430" : "#0d948825"}, transparent 70%)` }}
       />
 
       {/* Card shell */}
       <div
-        className={`relative rounded-2xl border overflow-hidden shadow-2xl transition-all duration-500 group-hover:-translate-y-2 ${
+        className={`relative rounded-2xl border overflow-hidden transition-all duration-300 group-hover:-translate-y-1.5 flex flex-col h-full ${
           theme === "dark"
-            ? "border-white/8 bg-linear-to-b from-[#111827] to-[#0c1220]"
-            : "border-slate-200/80 bg-white"
+            ? "border-white/10 bg-zinc-900/80 backdrop-blur-xl shadow-lg group-hover:border-teal-500/40 group-hover:shadow-teal-500/10"
+            : "border-slate-200 bg-white shadow-sm group-hover:border-teal-500/40 group-hover:shadow-xl group-hover:shadow-teal-500/5"
         }`}
-        style={{ boxShadow: theme === "dark" ? `0 0 0 1px ${cert.accentColor}20, 0 20px 60px rgba(0,0,0,0.4)` : `0 4px 30px rgba(0,0,0,0.08), 0 0 0 1px ${cert.accentColor}30` }}
       >
-        {/* Top accent bar */}
-        <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${cert.accentColor}, ${cert.accentColor}60)` }} />
-
-        {/* Certificate image area with 3D flip effect */}
-        <div
-          className="relative w-full cursor-pointer select-none"
-          style={{ aspectRatio: "16/9", perspective: "800px" }}
-          onClick={() => setFlipped(!flipped)}
-          title="Click to flip"
+        {/* Certificate thumbnail image */}
+        <a
+          href={targetUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="relative w-full aspect-16/10 overflow-hidden bg-zinc-950/20 block group/img border-b border-white/5"
         >
-          {/* Flip container */}
-          <div
-            className="relative w-full h-full transition-all duration-700"
-            style={{
-              transformStyle: "preserve-3d",
-              transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)"
-            }}
-          >
-            {/* Front face – certificate image */}
-            <div className="absolute inset-0" style={{ backfaceVisibility: "hidden" }}>
-              <img
-                src={cert.imageUrl}
-                alt={cert.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                loading="lazy"
-              />
-              {/* Hover overlay with hint text */}
-              <div className={`absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                theme === "dark" ? "bg-black/40" : "bg-black/20"
-              }`}>
-                <span className="text-white text-xs font-bold bg-black/50 backdrop-blur-sm px-3 py-1.5 rounded-full tracking-widest uppercase">
-                  Click to flip
-                </span>
-              </div>
-            </div>
-
-            {/* Back face – credential details */}
-            <div
-              className={`absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 ${
-                theme === "dark" ? "bg-[#0c1220]" : "bg-slate-50"
-              }`}
-              style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-            >
-              <div className="h-14 w-14 rounded-full flex items-center justify-center shadow-lg" style={{ background: `${cert.accentColor}25`, border: `2px solid ${cert.accentColor}60` }}>
-                <BadgeCheck size={28} style={{ color: cert.accentColor }} />
-              </div>
-              <p className={`text-center text-xs font-bold uppercase tracking-widest ${theme === "dark" ? "text-zinc-400" : "text-slate-500"}`}>Credential ID</p>
-              <p className={`text-center text-sm font-mono font-semibold break-all ${theme === "dark" ? "text-white" : "text-slate-800"}`}>{cert.credId}</p>
-              <div className={`w-full border-t mt-2 pt-3 flex flex-col items-center gap-1 ${theme === "dark" ? "border-white/10" : "border-slate-200"}`}>
-                <p className={`text-[10px] uppercase tracking-widest font-bold ${theme === "dark" ? "text-zinc-500" : "text-slate-400"}`}>Issued by</p>
-                <p className={`text-sm font-extrabold ${theme === "dark" ? "text-white" : "text-slate-800"}`}>{cert.issuer}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Card body */}
-        <div className="p-5">
-          {/* Category badge + date */}
-          <div className="flex items-center justify-between mb-3">
-            <span
-              className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-full"
-              style={{ background: `${cert.accentColor}20`, color: cert.accentColor }}
-            >
-              <Hash size={9} />
-              {cert.category}
-            </span>
-            <span className={`inline-flex items-center gap-1 text-[10px] font-semibold ${theme === "dark" ? "text-zinc-500" : "text-slate-400"}`}>
-              <Calendar size={10} />
-              {cert.date}
+          <img
+            src={cert.imageUrl}
+            alt={cert.title}
+            className="w-full h-full object-cover object-top transition-transform duration-500 group-hover/img:scale-105"
+            loading="lazy"
+          />
+          {/* Hover overlay hint */}
+          <div className="absolute inset-0 bg-black/0 group-hover/img:bg-black/25 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover/img:opacity-100">
+            <span className="bg-black/60 backdrop-blur-md text-white text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">
+              <ExternalLink size={13} />
+              Open Certificate
             </span>
           </div>
+        </a>
 
-          {/* Title */}
-          <h3 className={`font-display text-base sm:text-lg font-extrabold leading-snug mb-1 transition-colors ${
+        {/* Card content */}
+        <div className="p-5 flex flex-col flex-1 justify-between gap-5">
+          {/* Certificate Title */}
+          <h3 className={`font-display text-base sm:text-lg font-extrabold leading-snug ${
             theme === "dark" ? "text-white" : "text-slate-900"
           }`}>
             {cert.title}
           </h3>
 
-          {/* Issuer */}
-          <p className={`text-xs font-bold uppercase tracking-wider ${theme === "dark" ? "text-zinc-400" : "text-slate-500"}`}>
-            {cert.issuer}
-          </p>
-
-          {/* Divider */}
-          <div className={`my-4 h-px ${theme === "dark" ? "bg-white/8" : "bg-slate-100"}`} />
-
-          {/* Action buttons */}
-          <div className="flex items-center gap-2.5">
-            {cert.driveUrl && (
-              <a
-                href={cert.driveUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold tracking-tight transition-all duration-200 hover:brightness-110 active:scale-95"
-                style={{ background: `${cert.accentColor}20`, color: cert.accentColor, border: `1px solid ${cert.accentColor}40` }}
-              >
-                <Link2 size={12} />
-                <span>View Certificate</span>
-              </a>
-            )}
-            <a
-              href={cert.pdfUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold tracking-tight transition-all duration-200 active:scale-95 ${
-                theme === "dark"
-                  ? "bg-white/5 hover:bg-white/10 text-zinc-300 border border-white/10"
-                  : "bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200"
-              }`}
-            >
-              <FileText size={12} />
-              <span>Open PDF</span>
-            </a>
-          </div>
+          {/* View Certificate Button */}
+          <a
+            href={targetUrl}
+            target="_blank"
+            rel="noreferrer"
+            className={`w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-bold tracking-tight transition-all duration-200 active:scale-[0.98] ${
+              theme === "dark"
+                ? "bg-teal-500/15 hover:bg-teal-500/25 text-[#00f5b4] border border-teal-500/30 hover:border-teal-500/50 shadow-xs"
+                : "bg-teal-50 hover:bg-teal-100 text-teal-700 border border-teal-200/80 hover:border-teal-300 shadow-xs"
+            }`}
+          >
+            <span>View Certificate</span>
+            <ExternalLink size={14} />
+          </a>
         </div>
       </div>
     </motion.div>
@@ -295,173 +215,76 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
   // 2. CERTIFICATES LIST
   const certificates = [
     {
-      id: "cert-learn-java-codechef",
-      title: "Learn Java",
-      issuer: "CodeChef",
-      date: "9th July 2026",
-      credId: "eaeac5d | sudharsmarty00",
-      pdfUrl: "/Certificates/Learn Java Certificate.pdf",
-      imageUrl: "/Certificates/Learn Java.png",
+      id: "cert-aws-cloud-practitioner-essentials",
+      title: "AWS Cloud Practitioner Essentials",
+      issuer: "Amazon Web Services",
+      date: "25th July 2026",
+      pdfUrl: "/Certificates/AWS Cloud Practitioner Essentials.pdf",
+      imageUrl: "/Certificates/AWS.png",
       driveUrl: "https://drive.google.com/file/d/1h3ZLHaCXdFppByUXsOwZorYRp9zoPiev/view?usp=drive_link",
-      category: "Programming",
+      category: "Cloud",
       accentColor: "#f59e0b",
       element: null,
+    },
+    {
+      id: "cert-mongodb-developer",
+      title: "MongoDB",
+      issuer: "MongoDB",
+      date: "22nd July 2026",
+      pdfUrl: "/Certificates/MongoDB.pdf",
+      imageUrl: "/Certificates/MongoDB.png",
+      driveUrl: "https://drive.google.com/file/d/1h3ZLHaCXdFppByUXsOwZorYRp9zoPiev/view?usp=drive_link",
+      category: "Databases",
+      accentColor: "#f59e0b",
+      element: null,
+    },
+    {
+      id: "cert-gemini-certified-student",
+      title: "Gemini Certified Student",
+      pdfUrl: "/Certificates/Gemini Certified Student.pdf",
+      imageUrl: "/Certificates/GeminiCertifiedStudent.png",
+    },
+    {
+      id: "cert-java-problem-solving-codechef",
+      title: "Java Problem Solving",
+      pdfUrl: "/Certificates/Java Problem Solving.pdf",
+      imageUrl: "/Certificates/JavaProblemSolving.png",
+    },
+    {
+      id: "cert-learn-java-codechef",
+      title: "Learn Java",
+      pdfUrl: "/Certificates/Learn Java Certificate.pdf",
+      imageUrl: "/Certificates/Learn Java.png",
     },
     {
       id: "cert-practice-java-codechef",
       title: "Practice Java",
-      issuer: "CodeChef",
-      date: "10th July 2026",
-      credId: "83b14cd | sudharsmarty00",
       pdfUrl: "/Certificates/Practice Java Certificate.pdf",
       imageUrl: "/Certificates/Practice Java.png",
-      driveUrl: "https://drive.google.com/file/d/1eN9HZFFAag4rDdUAREQlvVmIknvzQfHi/view?usp=drive_link",
-      category: "Programming",
-      accentColor: "#f59e0b",
-      element: null,
     },
     {
       id: "cert-data-analytics-nptel",
       title: "Data Analytics with Python",
-      issuer: "IIT Roorkee (NPTEL)",
-      date: "Jan - Apr 2026",
-      credId: "NPTEL25CS12S3",
       pdfUrl: "/Certificates/Data Analytics with Python - NPTEL.pdf",
       imageUrl: "/Certificates/Screenshot 2026-06-11 155449.png",
-      category: "Data Science",
-      accentColor: "#f59e0b",
-      element: (
-        <div className="relative w-full h-full bg-[#fdfbf7] border-8 bg-linear-to-b from-[#fdfbf6] to-[#faf3da] border-[#a17e3b] p-3 flex flex-col justify-between font-sans text-neutral-800 rounded-xl overflow-hidden shadow-2xl">
-          {/* Logo Headers */}
-          <div className="flex justify-between items-center border-b border-[#a17e3b]/15 pb-1">
-            <span className="text-[5px] font-black text-[#a17e3b] tracking-wider uppercase">NPTEL Online Certification</span>
-            <span className="text-[4px] font-mono text-zinc-500 uppercase">Roll No: NPTEL25CS12S3</span>
-          </div>
-          {/* Main info */}
-          <div className="text-center space-y-1 my-auto">
-            <div className="text-[4px] uppercase tracking-widest text-zinc-500 font-bold">This certificate is awarded to</div>
-            <div className="text-[11px] font-serif font-black text-amber-950 uppercase tracking-wide">SUDHARSHAN N</div>
-            <div className="text-[4px] uppercase tracking-widest text-zinc-500 font-bold">for successfully completing the course</div>
-            <div className="text-[9px] font-extrabold text-[#782c16] leading-tight">Data Analytics with Python</div>
-            <div className="text-[3.5px] text-zinc-400 mt-1">Conducted by Elite Faculty members from IIT Roorkee</div>
-          </div>
-          {/* Gold badge seal */}
-          <div className="absolute right-3.5 bottom-8 h-8 w-8 rounded-full bg-linear-to-tr from-amber-600 to-yellow-400 p-0.5 border border-amber-700/50 shadow flex items-center justify-center animate-pulse-slow">
-            <div className="h-full w-full rounded-full border border-dashed border-white/80 flex items-center justify-center text-[4px] font-black text-amber-950 font-serif uppercase text-center scale-[0.95]">ELITE</div>
-          </div>
-          {/* Bottom */}
-          <div className="flex justify-between items-end border-t border-[#a17e3b]/15 pt-1 text-[4px] font-bold text-[#4a3410] uppercase">
-            <span>Duration: 12 Weeks</span>
-            <span>swayam.gov.in</span>
-          </div>
-        </div>
-      )
     },
     {
       id: "cert-cyber-security-nptel",
       title: "Practical Cyber Security for Cyber Security Practitioners",
-      issuer: "IIT Kanpur (NPTEL)",
-      date: "Jul - Oct 2025",
-      credId: "NPTEL25CS120S154304549",
       pdfUrl: "/Certificates/Practical Cyber Security for Cyber Security Practitioners - NPTEL.pdf",
       imageUrl: "/Certificates/Screenshot 2026-06-11 155629.png",
-      category: "Cyber Security",
-      accentColor: "#06b6d4",
-      element: (
-        <div className="relative w-full h-full bg-[#f4fbfc] border-8 bg-linear-to-b from-[#f4fbfc] to-[#e6f4f7] border-[#1b4e5a] p-3 flex flex-col justify-between font-sans text-neutral-800 rounded-xl overflow-hidden shadow-2xl">
-          {/* Header */}
-          <div className="flex justify-between items-center border-b border-[#1b4e5a]/15 pb-1">
-            <span className="text-[5px] font-black text-[#1b4e5a] tracking-wider uppercase">NPTEL Elite Certification</span>
-            <span className="text-[4px] font-mono text-zinc-500 uppercase">Roll No: NPTEL25CS120S154304549</span>
-          </div>
-          {/* Info */}
-          <div className="text-center space-y-1 my-auto">
-            <div className="text-[4px] uppercase tracking-widest text-[#1b4e5a]/60 font-bold">This is to certify that</div>
-            <div className="text-[11px] font-serif font-black text-[#112d35] uppercase tracking-wide">SUDHARSHAN N</div>
-            <div className="text-[4px] uppercase tracking-widest text-[#1b4e5a]/60 font-bold">completed the qualification track in</div>
-            <div className="text-[8.5px] font-extrabold text-[#114b5f] leading-tight">Practical Cyber Security <br/>for Cyber Security Practitioners</div>
-          </div>
-          {/* Seal */}
-          <div className="absolute right-4 bottom-8 h-8 w-8 rounded-full bg-linear-to-tr from-cyan-600 to-[#1b4e5a] p-0.5 border border-cyan-800 shadow flex items-center justify-center">
-            <div className="h-full w-full rounded-full border border-dashed border-white/80 flex items-center justify-center text-[4px] font-black text-white font-serif uppercase text-center scale-[0.95]">IIT SEC</div>
-          </div>
-          {/* Bottom */}
-          <div className="flex justify-between items-end border-t border-[#1b4e5a]/15 pt-1 text-[4px] font-bold text-[#1b4e5a] uppercase">
-            <span>IIT Kanpur</span>
-            <span>NPTEL Online</span>
-          </div>
-        </div>
-      )
     },
     {
       id: "cert-onedot-intern",
       title: "Full Stack Intern",
-      issuer: "OneDot Communications",
-      date: "Jan 2026",
-      credId: "ODC-INT-25A",
       pdfUrl: "/Certificates/OneDot Communications - Full Stack Intern.pdf",
       imageUrl: "/Certificates/Screenshot 2026-06-11 155558.png",
-      category: "Internship",
-      accentColor: "#10b981",
-      element: (
-        <div className="relative w-full h-full bg-[#fafbfd] border-8 bg-linear-to-b from-[#fafbfd] to-[#edf3fa] border-[#0c2a4a] p-3 flex flex-col justify-between font-sans text-neutral-800 rounded-xl overflow-hidden shadow-2xl">
-          {/* Diagonal ribbon */}
-          <div className="absolute top-1 left-1.5 bg-[#00f5b4] border border-[#0c2a4a] text-slate-950 font-black text-[4.5px] px-1.5 py-0.5 uppercase tracking-wider rounded-xs shadow -rotate-6 z-10">
-            Verified Intern
-          </div>
-          {/* Header */}
-          <div className="flex justify-between items-center border-b border-[#0c2a4a]/10 pb-1 pl-10">
-            <span className="text-[5.5px] font-black text-[#0c2a4a] tracking-tight">OneDot Communications</span>
-            <span className="text-[4px] font-mono text-zinc-400">REF: ODC-2025-C8</span>
-          </div>
-          {/* Body */}
-          <div className="text-center space-y-1.5 my-auto">
-            <div className="text-[4px] uppercase tracking-widest text-[#0c2a4a]/70 font-semibold">Certificate of Internship Completion</div>
-            <div className="text-[11px] font-serif font-black text-[#051c33] uppercase tracking-wide">Sudharshan N</div>
-            <p className="text-[4.5px] text-zinc-500 leading-normal max-w-47.5 mx-auto">
-              Successfully completed work as a <span className="font-bold text-[#0c2a4a]">Full Stack Intern</span> designing React apps, managing scalable APIs, and building fluid user flows.
-            </p>
-          </div>
-          {/* Bottom */}
-          <div className="flex justify-between items-end border-t border-[#0c2a4a]/10 pt-1 text-[4px] font-bold text-zinc-500 uppercase">
-            <span>Term: 2 Months</span>
-            <span className="text-[#0c2a4a]">onedot.com/verify</span>
-          </div>
-        </div>
-      )
     },
     {
       id: "cert-codec-intern",
       title: "Full Stack Intern",
-      issuer: "Codec Technologies",
-      date: "Dec 2025",
-      credId: "CTC-INT-25B",
       pdfUrl: "/Certificates/Codec Technologies - Full Stack Intern.pdf",
       imageUrl: "/Certificates/Screenshot 2026-06-11 155522.png",
-      category: "Internship",
-      accentColor: "#10b981",
-      element: (
-        <div className="relative w-full h-full bg-[#fdfdfd] border-8 bg-linear-to-b from-white to-[#f4f7f6] border-[#083327] p-3 flex flex-col justify-between font-sans text-neutral-800 rounded-xl overflow-hidden shadow-2xl">
-          {/* Header */}
-          <div className="flex justify-between items-center border-b border-[#083327]/10 pb-1">
-            <span className="text-[5.5px] font-black text-[#083327] tracking-tight">Codec Technologies</span>
-            <span className="text-[4px] font-mono text-zinc-400">REF: CTC-INT-99</span>
-          </div>
-          {/* Body */}
-          <div className="text-center space-y-1 my-auto">
-            <div className="text-[4px] uppercase tracking-widest text-[#083327]/70 font-semibold">INTERNSHIP COMPLETION AWARD</div>
-            <div className="text-[11px] font-serif font-black text-emerald-950 uppercase tracking-wide">SUDHARSHAN N</div>
-            <p className="text-[4.5px] text-zinc-500 leading-normal max-w-47.5 mx-auto">
-              Recognized for outstanding work and dedication in engineering robust cloud backend systems and interactive Vite architectures as our <span className="font-bold text-[#083327]">Full Stack Developer Intern</span>.
-            </p>
-          </div>
-          {/* Bottom */}
-          <div className="flex justify-between items-end border-t border-[#083327]/10 pt-1 text-[4px] font-bold text-zinc-500 uppercase">
-            <span>Grade: Exemplary (A+)</span>
-            <span className="text-[#083327]">codectech.io/verify</span>
-          </div>
-        </div>
-      )
     },
   ];
 
@@ -957,43 +780,18 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
                 {activeTab === "certificates" && (
                   <motion.div
                     key="certificates-panel"
-                    initial={{ opacity: 0 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
                     className="max-w-6xl mx-auto px-2 sm:px-4"
                   >
-                    {/* Stats bar */}
-                    <div className={`flex flex-wrap items-center justify-center gap-3 mb-8 py-3.5 px-5 rounded-2xl ${
-                      theme === "dark" ? "bg-white/4 border border-white/8" : "bg-slate-50 border border-slate-200"
-                    }`}>
-                      {[
-                        { label: "Total Certificates", value: certificates.length, color: "#2dd4bf" },
-                        { label: "NPTEL Elite", value: 2, color: "#f59e0b" },
-                        { label: "Industry", value: 2, color: "#10b981" },
-                        { label: "Programming", value: 2, color: "#f59e0b" },
-                      ].map((stat, i) => (
-                        <div key={i} className="flex items-center gap-2 px-3">
-                          <span className="text-xl font-black" style={{ color: stat.color }}>{stat.value}</span>
-                          <span className={`text-xs font-semibold ${theme === "dark" ? "text-zinc-400" : "text-slate-500"}`}>{stat.label}</span>
-                          {i < 3 && <span className={`ml-3 h-4 w-px ${theme === "dark" ? "bg-white/10" : "bg-slate-200"}`} />}
-                        </div>
-                      ))}
-                    </div>
-
                     {/* Certificate grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                       {certificates.map((cert, index) => (
                         <CertificateCard key={cert.id} cert={cert} theme={theme} index={index} />
                       ))}
                     </div>
-
-                    {/* Bottom hint */}
-                    <p className={`text-center text-xs mt-8 ${
-                      theme === "dark" ? "text-zinc-600" : "text-slate-400"
-                    }`}>
-                      💡 Click on any certificate image to reveal credential details
-                    </p>
                   </motion.div>
                 )}
 

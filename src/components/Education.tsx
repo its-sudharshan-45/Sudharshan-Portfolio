@@ -245,7 +245,7 @@ export default function Education({ theme = "light" }: EducationProps) {
               <div className={`text-4xl font-extrabold font-display tracking-tight shrink-0 ${
                 theme === "dark" ? "text-white" : "text-slate-900"
               }`}>
-                3
+                4
               </div>
             </div>
 
@@ -294,7 +294,7 @@ export default function Education({ theme = "light" }: EducationProps) {
               <div className={`text-4xl font-extrabold font-display tracking-tight shrink-0 ${
                 theme === "dark" ? "text-white" : "text-slate-900"
               }`}>
-                4
+                10
               </div>
             </div>
 
