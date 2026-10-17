@@ -29,10 +29,15 @@ interface Certificate {
   title: string;
   pdfUrl: string;
   imageUrl: string;
+  issuer?: string;
+  date?: string;
+  driveUrl?: string;
+  category?: string;
+  accentColor?: string;
+  element?: null;
 }
 
 interface CertificateCardProps {
-  key?: string | number;
   cert: Certificate;
   theme: "light" | "dark";
   index: number;
@@ -121,17 +126,72 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
   // 1. PROJECTS LIST
   const projects: Project[] = [
     {
+      id: "ReworkCV",
+      title: "ReworkCV",
+      shortDescription:
+        "ReworkCV is an AI-powered resume intelligence and ATS optimization platform that analyzes resumes against job descriptions with deterministic scoring, RAG-grounded insights, and tailored cover letter generation.",
+      longDescription:
+        "ReworkCV is a full-stack resume intelligence SaaS platform engineered to deliver grounded, actionable ATS-readiness insights and career collateral. It integrates a deterministic multi-section scoring engine with hybrid RAG retrieval powered by Supabase pgvector and a multi-provider LLM router (Ollama, Groq, Anthropic Claude, and OpenAI) featuring automatic failover. Key capabilities include deep resume-to-job matching, semantic gap analysis, an interactive AI Career Coach chat, scan history tracking, and automated cover letter generation with high-fidelity PDF and DOCX export. Designed local-first with enterprise-grade security and RLS policies, ReworkCV empowers job seekers to optimize their applications with transparency and precision.",
+      demoUrl: "https://reworkcv-kappa.vercel.app/",
+      githubUrl: "https://github.com/its-sudharshan-45/ReworkCV",
+      detailsUrl: "#",
+      imageUrl: "/Project_Images/ReworkCV.png",
+      techCount: 14,
+      featureCount: 7,
+      tags: [
+        "React",
+        "TypeScript",
+        "Vite",
+        "Tailwind CSS",
+        "Framer Motion",
+        "Node.js",
+        "Express",
+        "Supabase PostgreSQL",
+        "pgvector (RAG)",
+        "Supabase Auth",
+        "Ollama",
+        "Groq",
+        "Anthropic Claude",
+        "OpenAI",
+      ],
+      keyFeatures: [
+        "Deterministic Multi-Section ATS Scoring & Job-Description Matcher",
+        "Hybrid RAG Retrieval with Supabase pgvector Knowledge Base",
+        "Multi-Provider AI Router with Automatic Failover (Ollama, Groq, Anthropic, OpenAI)",
+        "Interactive AI Career Coach for Context-Aware Follow-Up",
+        "Automated Tailored Cover Letter Generator with PDF & DOCX Export",
+        "Scan History & Analysis Persistence with Supabase RLS",
+        "Document Parsing & Validation Pipeline (PDF & TXT Extraction)",
+      ],
+    },
+    {
       id: "SemesterSwap",
       title: "SemesterSwap",
-      shortDescription: "SemesterSwap is an AI-powered student marketplace that enables verified college students to securely buy, sell, and exchange academic essentials through trusted peer-to-peer transactions.",
-      longDescription: "SemesterSwap is a full-stack, AI-powered marketplace built exclusively for verified college students. The platform enables secure peer-to-peer trading of textbooks, lab equipment, notes, and other academic essentials within a trusted campus community. Key features include AI-driven listing optimization with product title enhancement and description generation powered by Anthropic Claude, Groq, and Google Gemini, personalized recommendations, real-time chat, SMTP-based email notifications, campus meeting coordination, and structured transaction workflows. By combining verified student authentication, trust-focused interactions, and intelligent automation, SemesterSwap delivers a safer, smarter, and more efficient marketplace experience for students.",
+      shortDescription:
+        "SemesterSwap is an AI-powered student marketplace that enables verified college students to securely buy, sell, and exchange academic essentials through trusted peer-to-peer transactions.",
+      longDescription:
+        "SemesterSwap is a full-stack, AI-powered marketplace built exclusively for verified college students. The platform enables secure peer-to-peer trading of textbooks, lab equipment, notes, and other academic essentials within a trusted campus community. Key features include AI-driven listing optimization with product title enhancement and description generation powered by Anthropic Claude, Groq, and Google Gemini, personalized recommendations, real-time chat, SMTP-based email notifications, campus meeting coordination, and structured transaction workflows. By combining verified student authentication, trust-focused interactions, and intelligent automation, SemesterSwap delivers a safer, smarter, and more efficient marketplace experience for students.",
       demoUrl: "https://semester-swap-seven.vercel.app/",
       githubUrl: "https://github.com/its-sudharshan-45/SemesterSwap",
       detailsUrl: "#",
       imageUrl: "/Project_Images/SemesterSwap.png",
       techCount: 13,
-      featureCount: 5,
-      tags: ["React","TypeScript","Vite", "Tailwind CSS", "Python", "FastAPI", "SQLAlchemy", "Supabase PostgreSQL", "Supabase Auth","JWT","Anthropic Claude","Groq","Google Gemini"],
+      featureCount: 7,
+      tags: [
+        "React",
+        "TypeScript",
+        "Vite",
+        "Tailwind CSS",
+        "Python",
+        "FastAPI",
+        "SQLAlchemy",
+        "Supabase PostgreSQL",
+        "Supabase Auth",
+        "JWT",
+        "Anthropic Claude",
+        "Groq",
+        "Google Gemini",
+      ],
       keyFeatures: [
         "AI-Powered Listing Optimization (Product Title Enhancement & Description Generation)",
         "Multi-Provider AI Integration (Anthropic Claude, Groq, Google Gemini)",
@@ -139,41 +199,71 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
         "SMTP-Based Email Notifications",
         "Campus Meeting Coordination",
         "Structured Transaction Workflows",
-        "Secure Authentication & Authorization (JWT)"
+        "Secure Authentication & Authorization (JWT)",
       ],
     },
     {
       id: "JobGuard",
       title: "JobGuard",
-      shortDescription: "JobGuard provides an intelligent and reliable solution for detecting recruitment scams, improving trust, transparency, and safety in online job marketplaces.",
-      longDescription: "JobGuard is a full-stack machine learning application that detects fraudulent job postings using natural language processing and predictive analytics. The system analyzes job descriptions in real time and classifies them as legitimate or potentially fraudulent, helping job seekers and recruitment platforms make safer decisions.",
+      shortDescription:
+        "JobGuard provides an intelligent and reliable solution for detecting recruitment scams, improving trust, transparency, and safety in online job marketplaces.",
+      longDescription:
+        "JobGuard is a full-stack machine learning application that detects fraudulent job postings using natural language processing and predictive analytics. The system analyzes job descriptions in real time and classifies them as legitimate or potentially fraudulent, helping job seekers and recruitment platforms make safer decisions.",
       demoUrl: "https://github.com",
       githubUrl: "https://github.com/its-sudharshan-45/JobGuard",
       detailsUrl: "#",
       imageUrl: "/Project_Images/JobGuard.png",
       techCount: 9,
       featureCount: 5,
-      tags: ["React","Vite", "Tailwind CSS", "Python", "FastAPI", "Scikit-learn", "NLP-based text classification", "MLflow", "PostgreSQL"],
+      tags: [
+        "React",
+        "Vite",
+        "Tailwind CSS",
+        "Python",
+        "FastAPI",
+        "Scikit-learn",
+        "NLP-based text classification",
+        "MLflow",
+        "PostgreSQL",
+      ],
       keyFeatures: [
         "Real-time fake job posting detection",
         "Machine learning-powered classification",
         "Interactive analytics and confidence scoring",
         "Fast and scalable REST API architecture",
-        "Experiment and model tracking with MLflow"
+        "Experiment and model tracking with MLflow",
       ],
     },
     {
       id: "Spot4Notes",
       title: "Spot4Notes",
-      shortDescription: "Spot4Notes is an AI-powered academic resource sharing platform exclusively for college students, enabling secure note sharing, smart search, automated content moderation, and an interactive AI Study Assistant.",
-      longDescription: "Spot4Notes is a centralized AI-enhanced academic platform designed to simplify the way college students upload, discover, and learn from study materials across 14 departments. The platform ensures a secure and trusted community through college email verification, automated content moderation using OCR and document processing, and an admin approval workflow. It features advanced search capabilities, real-time notifications, and an AI Study Assistant that helps students generate quizzes, summarize notes, and receive personalized learning support. Built with React, Node.js, Express, PostgreSQL, and OpenAI APIs, Spot4Notes delivers a scalable, intelligent, and seamless learning experience.",
+      shortDescription:
+        "Spot4Notes is an AI-powered academic resource sharing platform exclusively for college students, enabling secure note sharing, smart search, automated content moderation, and an interactive AI Study Assistant.",
+      longDescription:
+        "Spot4Notes is a centralized AI-enhanced academic platform designed to simplify the way college students upload, discover, and learn from study materials across 14 departments. The platform ensures a secure and trusted community through college email verification, automated content moderation using OCR and document processing, and an admin approval workflow. It features advanced search capabilities, real-time notifications, and an AI Study Assistant that helps students generate quizzes, summarize notes, and receive personalized learning support. Built with React, Node.js, Express, PostgreSQL, and OpenAI APIs, Spot4Notes delivers a scalable, intelligent, and seamless learning experience.",
       demoUrl: "https://github.com",
       githubUrl: "https://github.com/its-sudharshan-45/Spot4Notes",
       detailsUrl: "#",
       imageUrl: "/Project_Images/Spot4Notes.png",
       techCount: 15,
       featureCount: 9,
-      tags: ["React.js","Vite","Tailwind CSS","React Router","Zustand","Node.js","Express.js","PostgreSQL","JWT","bcrypt","Email Verification","pdf-parse","Mammoth","Tesseract.js (OCR)","OpenAI API"],
+      tags: [
+        "React.js",
+        "Vite",
+        "Tailwind CSS",
+        "React Router",
+        "Zustand",
+        "Node.js",
+        "Express.js",
+        "PostgreSQL",
+        "JWT",
+        "bcrypt",
+        "Email Verification",
+        "pdf-parse",
+        "Mammoth",
+        "Tesseract.js (OCR)",
+        "OpenAI API",
+      ],
       keyFeatures: [
         "College Email Authentication",
         "14 Department Resource Hub",
@@ -183,37 +273,46 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
         "AI Study Assistant (Quiz, Summary & Tutor)",
         "Admin Dashboard & Analytics",
         "Real-Time Notifications",
-        "User & Content Management"
+        "User & Content Management",
       ],
     },
     {
       id: "StudentHub",
       title: "StudentHub",
-      shortDescription: "A web-based student management system that enables administrators to efficiently manage student records through CRUD operations, including adding, updating, searching, viewing, and deleting student information.",
-      longDescription: "Student Record Management System is a full-stack web application developed to streamline the management of student information. It provides administrators with a centralized platform to perform CRUD operations on student records, including registration, modification, searching, and deletion. Built using Node.js, Express.js, MongoDB, Mongoose, and EJS, the application follows an MVC architecture to deliver a structured, scalable, and efficient record management solution.",
+      shortDescription:
+        "A web-based student management system that enables administrators to efficiently manage student records through CRUD operations, including adding, updating, searching, viewing, and deleting student information.",
+      longDescription:
+        "Student Record Management System is a full-stack web application developed to streamline the management of student information. It provides administrators with a centralized platform to perform CRUD operations on student records, including registration, modification, searching, and deletion. Built using Node.js, Express.js, MongoDB, Mongoose, and EJS, the application follows an MVC architecture to deliver a structured, scalable, and efficient record management solution.",
       demoUrl: "https://github.com",
       githubUrl: "https://github.com/its-sudharshan-45/StudentHub",
       detailsUrl: "#",
       imageUrl: "/Project_Images/StudentHub.png",
       techCount: 10,
-      featureCount: 4,
-      tags: ["Node.js","Express.js","MongoDB","EJS","HTML","CSS","JavaScript","Body-Parser","Nodemon"],
+      featureCount: 6,
+      tags: [
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "EJS",
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Body-Parser",
+        "Nodemon",
+      ],
       keyFeatures: [
         "Student Registration & Record Management",
         "Complete CRUD Operations (Create, Read, Update, Delete)",
         "Student Search & Data Retrieval",
         "MongoDB Database Integration",
         "MVC Architecture for Scalable Code Organization",
-        "User-Friendly Web Interface"
+        "User-Friendly Web Interface",
       ],
-      
-    }
+    },
   ];
 
-
-
   // 2. CERTIFICATES LIST
-  const certificates = [
+  const certificates: Certificate[] = [
     {
       id: "cert-aws-cloud-practitioner-essentials",
       title: "AWS Cloud Practitioner Essentials",
@@ -634,7 +733,7 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
                       : "text-slate-500 hover:text-slate-800 relative z-10"
                   }`}
                 >
-                  <Terminal size={15} className={activeTab === "projects" ? (theme === "dark" ? "text-[#00f5b4]" : "text-teal-655 text-teal-600") : "text-zinc-400"} />
+                  <Terminal size={15} className={activeTab === "projects" ? (theme === "dark" ? "text-[#00f5b4]" : "text-teal-600") : "text-zinc-400"} />
                   <span>Projects</span>
                 </button>
 
@@ -651,7 +750,7 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
                       : "text-slate-500 hover:text-slate-800 relative z-10"
                   }`}
                 >
-                  <Award size={15} className={activeTab === "certificates" ? (theme === "dark" ? "text-[#00f5b4]" : "text-teal-655 text-teal-600") : "text-zinc-400"} />
+                  <Award size={15} className={activeTab === "certificates" ? (theme === "dark" ? "text-[#00f5b4]" : "text-teal-600") : "text-zinc-400"} />
                   <span>Certificates</span>
                 </button>
 
@@ -668,7 +767,7 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
                       : "text-slate-500 hover:text-slate-800 relative z-10"
                   }`}
                 >
-                  <Layers size={15} className={activeTab === "tech-stack" ? (theme === "dark" ? "text-[#00f5b4]" : "text-teal-653 text-teal-600") : "text-zinc-400"} />
+                  <Layers size={15} className={activeTab === "tech-stack" ? (theme === "dark" ? "text-[#00f5b4]" : "text-teal-600") : "text-zinc-400"} />
                   <span>Tech Stack</span>
                 </button>
               </div>
@@ -728,11 +827,11 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
                             <h3 className={`font-display text-xl sm:text-2xl font-extrabold tracking-tight transition-colors leading-snug ${
                               theme === "dark" 
                                 ? "text-white hover:text-[#00f5b4]" 
-                                : "text-slate-800 hover:text-teal-655 hover:text-teal-600"
+                                : "text-slate-800 hover:text-teal-600"
                             }`}>
                               {project.title}
                             </h3>
-                            <p className={`mt-3 text-xs sm:text-sm font-normal leading-relaxed ${theme === "dark" ? "text-zinc-400" : "text-slate-555 text-slate-500"}`}>
+                            <p className={`mt-3 text-xs sm:text-sm font-normal leading-relaxed ${theme === "dark" ? "text-zinc-400" : "text-slate-500"}`}>
                               {project.shortDescription}
                             </p>
                           </div>
@@ -915,8 +1014,7 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
                                   <span
                                     className={`text-[9px] sm:text-[10px] font-semibold tracking-tight text-center leading-tight transition-colors duration-200 ${
                                       theme === "dark" ? "text-zinc-400" : "text-slate-500"
-                                    } group-hover/skill:text-[${category.accent}]`}
-                                    style={{} as React.CSSProperties}
+                                    }`}
                                     onMouseEnter={e => { (e.currentTarget as HTMLSpanElement).style.color = category.accent; }}
                                     onMouseLeave={e => { (e.currentTarget as HTMLSpanElement).style.color = ""; }}
                                   >

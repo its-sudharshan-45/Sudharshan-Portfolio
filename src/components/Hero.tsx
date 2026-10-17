@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, type Variants } from "motion/react";
 import { Sparkles, FileText, Code } from "lucide-react";
 import { portfolioData } from "../portfolioData.ts";
 
@@ -9,7 +9,7 @@ interface HeroProps {
 }
 
 export default function Hero({ onOpenContact, onNavigate, theme = "light" }: HeroProps) {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -20,14 +20,14 @@ export default function Hero({ onOpenContact, onNavigate, theme = "light" }: Her
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 25 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.7,
-        ease: [0.16, 1, 0.3, 1], // clean custom dynamic ease
+        ease: [0.16, 1, 0.3, 1] as [number, number, number, number], // clean custom dynamic ease
       },
     },
   };
@@ -75,9 +75,9 @@ export default function Hero({ onOpenContact, onNavigate, theme = "light" }: Her
               theme === "dark" ? "text-teal-400" : "text-teal-600"
             }`}
           >
-            <Sparkles size={14} className={`shrink-0 animate-pulse ${theme === "dark" ? "text-[#00f5b4]" : "text-teal-650 text-teal-600"}`} />
+            <Sparkles size={14} className={`shrink-0 animate-pulse ${theme === "dark" ? "text-[#00f5b4]" : "text-teal-600"}`} />
             <span className="opacity-90">Turning Vision into Intelligent Solutions</span>
-            <Sparkles size={14} className={`shrink-0 animate-pulse ${theme === "dark" ? "text-[#00f5b4]" : "text-teal-650 text-teal-600"}`} />
+            <Sparkles size={14} className={`shrink-0 animate-pulse ${theme === "dark" ? "text-[#00f5b4]" : "text-teal-600"}`} />
           </motion.p>
         </div>
 
