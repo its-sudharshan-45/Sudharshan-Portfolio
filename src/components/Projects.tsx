@@ -1,6 +1,6 @@
 import React, { useState, ReactNode } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Terminal, Layers, ExternalLink, ArrowRight, Code, Cpu, ArrowLeft, Star, Github, Award } from "lucide-react";
+import { Terminal, Layers, ExternalLink, ArrowRight, Code, Cpu, ArrowLeft, Star, Github, Award, ChevronDown } from "lucide-react";
 
 // Project Type Definition
 interface Project {
@@ -122,9 +122,49 @@ function CertificateCard({ cert, theme, index }: CertificateCardProps) {
 export default function Projects({ theme = "light" }: ProjectsProps) {
   const [activeTab, setActiveTab] = useState<"projects" | "certificates" | "tech-stack">("projects");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isProjectsExpanded, setIsProjectsExpanded] = useState<boolean>(false);
 
   // 1. PROJECTS LIST
   const projects: Project[] = [
+    {
+      id: "CrimeLensAI",
+      title: "CrimeLens AI",
+      shortDescription:
+        "CrimeLens AI is a deep learning-powered crime analytics platform that forecasts crime incident volumes for the next 7 days and generates comparative risk scores through an interactive district-level dashboard.",
+      longDescription:
+        "CrimeLens AI is a full-stack AI-powered crime forecasting and decision-support platform built to analyze historical crime patterns and predict short-term incident trends across India. Powered by a PyTorch GRU time-series model, the system processes historical crime sequences to generate 7-day forecasts and calculates a Relative Crime Risk Index (0–100) for comparing predicted incident volumes. It features a geographic catalog covering 28 states, 8 Union Territories, and 789 districts, interactive forecast visualizations, model performance metrics, and uncertainty-aware prediction reporting. Built with React, TypeScript, FastAPI, and Supabase, CrimeLens AI combines deep learning, asynchronous APIs, secure authentication, and data visualization in a unified public safety analytics platform.",
+      demoUrl: "#",
+      githubUrl: "https://github.com/its-sudharshan-45/CrimeLens-AI",
+      detailsUrl: "#",
+      imageUrl: "/Project_Images/CrimeLens.png",
+      techCount: 14,
+      featureCount: 7,
+      tags: [
+        "React 19",
+        "TypeScript",
+        "Vite",
+        "Tailwind CSS",
+        "Python",
+        "FastAPI",
+        "PyTorch",
+        "GRU",
+        "Pandas",
+        "NumPy",
+        "Scikit-learn",
+        "Supabase PostgreSQL",
+        "Supabase Auth",
+        "Docker",
+      ],
+      keyFeatures: [
+        "GRU-Based Deep Learning for 7-Day Crime Forecasting",
+        "Pan-India Geographic Catalog Covering 789 Districts",
+        "Relative Crime Risk Index with Low, Medium & High Risk Tiers",
+        "Interactive Crime Forecasts, Risk Gauges & Trend Visualizations",
+        "Model Evaluation Metrics: MAE, RMSE & WAPE",
+        "Prediction Uncertainty Reporting & Model Health Monitoring",
+        "Secure Authentication & REST APIs with FastAPI and Supabase",
+      ],
+    },
     {
       id: "ReworkCV",
       title: "ReworkCV",
@@ -463,6 +503,8 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
 
   const totalSkills = techStackCategories.reduce((acc, c) => acc + c.skills.length, 0);
 
+  const displayedProjects = isProjectsExpanded ? projects : projects.slice(0, 4);
+
   return (
     <section id="portfolio" className={`relative bg-transparent py-10 sm:py-12 md:py-14 transition-colors duration-300 ${
       theme === "dark" ? "text-white" : "text-slate-800"
@@ -783,93 +825,130 @@ export default function Projects({ theme = "light" }: ProjectsProps) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -15 }}
                     transition={{ duration: 0.4 }}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto"
+                    className="max-w-5xl mx-auto"
                   >
-                    {projects.map((project) => (
-                      <div
-                        key={project.id}
-                        id={`project-card-${project.id}`}
-                        className={`flex flex-col justify-between overflow-hidden rounded-2xl border p-5 pb-6 shadow-2xl transition-all duration-300 hover:-translate-y-1 relative group ${
-                          theme === "dark"
-                            ? "border-zinc-800/80 bg-[#0d1421]/90 hover:border-teal-500/30"
-                            : "border-slate-200 bg-white hover:border-teal-600/30 shadow-md"
-                        }`}
-                      >
-                        {/* Laptop Mockup Wrapper inside of card */}
-                        <div className={`relative w-full aspect-16/10 rounded-xl flex items-center justify-center p-3 xs:p-4 sm:p-6 border mb-5 overflow-hidden select-none transition-colors ${
-                          theme === "dark" ? "bg-zinc-900/60 border-zinc-800/30" : "bg-slate-50 border-slate-100"
-                        }`}>
-                          
-                          {/* CSS Laptop Frame */}
-                          <div className="relative w-full max-w-[320px] xs:max-w-[340px] sm:max-w-97.5 mx-auto scale-95 hover:scale-[1.01] transition-transform duration-300">
-                            {/* Screen Bezel */}
-                            <div className="relative aspect-16/10 w-full overflow-hidden rounded-t-xl bg-[#090b11] p-1.5 shadow-2xl border-[3px] border-[#334155]/80">
-                              {/* Screen Content */}
-                              <div className="h-full w-full overflow-hidden rounded bg-slate-950 flex flex-col relative">
-                                {project.imageUrl ? (
-                                  <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover" />
-                                ) : (
-                                  project.screenContent
-                                )}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                      <AnimatePresence initial={false}>
+                        {displayedProjects.map((project, index) => (
+                          <motion.div
+                            key={project.id}
+                            id={`project-card-${project.id}`}
+                            layout
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            transition={{ duration: 0.35, delay: index >= 4 ? (index - 4) * 0.08 : 0 }}
+                            className={`flex flex-col justify-between overflow-hidden rounded-2xl border p-5 pb-6 shadow-2xl transition-all duration-300 hover:-translate-y-1 relative group ${
+                              theme === "dark"
+                                ? "border-zinc-800/80 bg-[#0d1421]/90 hover:border-teal-500/30"
+                                : "border-slate-200 bg-white hover:border-teal-600/30 shadow-md"
+                            }`}
+                          >
+                            {/* Laptop Mockup Wrapper inside of card */}
+                            <div className={`relative w-full aspect-16/10 rounded-xl flex items-center justify-center p-3 xs:p-4 sm:p-6 border mb-5 overflow-hidden select-none transition-colors ${
+                              theme === "dark" ? "bg-zinc-900/60 border-zinc-800/30" : "bg-slate-50 border-slate-100"
+                            }`}>
+                              
+                              {/* CSS Laptop Frame */}
+                              <div className="relative w-full max-w-[320px] xs:max-w-[340px] sm:max-w-97.5 mx-auto scale-95 hover:scale-[1.01] transition-transform duration-300">
+                                {/* Screen Bezel */}
+                                <div className="relative aspect-16/10 w-full overflow-hidden rounded-t-xl bg-[#090b11] p-1.5 shadow-2xl border-[3px] border-[#334155]/80">
+                                  {/* Screen Content */}
+                                  <div className="h-full w-full overflow-hidden rounded bg-slate-950 flex flex-col relative">
+                                    {project.imageUrl ? (
+                                      <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover" />
+                                    ) : (
+                                      project.screenContent
+                                    )}
+                                  </div>
+                                </div>
+                                {/* Keyboard Base and Lip notch */}
+                                <div className="relative h-2 w-[114%] left-[-7%] bg-linear-to-b from-[#64748b] to-[#334155] rounded-b-lg shadow-xl border-t border-[#94a3b8]">
+                                  <div className="absolute left-1/2 top-0 h-1 w-12 -translate-x-1/2 rounded-b bg-[#1e293b]" />
+                                </div>
+                              </div>
+
+                            </div>
+
+                            {/* Context Meta Text */}
+                            <div className="px-1 flex flex-col flex-1 justify-between">
+                              <div>
+                                <h3 className={`font-display text-xl sm:text-2xl font-extrabold tracking-tight transition-colors leading-snug ${
+                                  theme === "dark" 
+                                    ? "text-white hover:text-[#00f5b4]" 
+                                    : "text-slate-800 hover:text-teal-600"
+                                }`}>
+                                  {project.title}
+                                </h3>
+                                <p className={`mt-3 text-xs sm:text-sm font-normal leading-relaxed ${theme === "dark" ? "text-zinc-400" : "text-slate-500"}`}>
+                                  {project.shortDescription}
+                                </p>
+                              </div>
+
+                              {/* Bottom Link Indicators */}
+                              <div className={`mt-6 flex items-center justify-between border-t pt-4 ${theme === "dark" ? "border-zinc-800/60" : "border-slate-100"}`}>
+                                <a
+                                  id={`project-live-${project.id}`}
+                                  href={project.demoUrl}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className={`flex items-center gap-1.5 text-xs sm:text-sm font-bold transition-colors ${
+                                    theme === "dark" ? "text-[#00f5b4] hover:text-[#2dd4bf]" : "text-teal-600 hover:text-teal-700"
+                                  }`}
+                                >
+                                  <span>Live Demo</span>
+                                  <ExternalLink size={14} />
+                                </a>
+
+                                <button
+                                  id={`project-details-${project.id}`}
+                                  onClick={() => {
+                                    setSelectedProject(project);
+                                    document.getElementById("portfolio")?.scrollIntoView({ behavior: 'smooth' });
+                                  }}
+                                  className={`flex items-center gap-1 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all shadow-sm cursor-pointer ${
+                                    theme === "dark"
+                                      ? "bg-zinc-800 hover:bg-zinc-700/80 text-zinc-300 hover:text-white"
+                                      : "bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-800"
+                                  }`}
+                                >
+                                  <span>Details</span>
+                                  <ArrowRight size={13} />
+                                </button>
                               </div>
                             </div>
-                            {/* Keyboard Base and Lip notch */}
-                            <div className="relative h-2 w-[114%] left-[-7%] bg-linear-to-b from-[#64748b] to-[#334155] rounded-b-lg shadow-xl border-t border-[#94a3b8]">
-                              <div className="absolute left-1/2 top-0 h-1 w-12 -translate-x-1/2 rounded-b bg-[#1e293b]" />
-                            </div>
-                          </div>
+                          </motion.div>
+                        ))}
+                      </AnimatePresence>
+                    </div>
 
-                        </div>
-
-                        {/* Context Meta Text */}
-                        <div className="px-1 flex flex-col flex-1 justify-between">
-                          <div>
-                            <h3 className={`font-display text-xl sm:text-2xl font-extrabold tracking-tight transition-colors leading-snug ${
-                              theme === "dark" 
-                                ? "text-white hover:text-[#00f5b4]" 
-                                : "text-slate-800 hover:text-teal-600"
-                            }`}>
-                              {project.title}
-                            </h3>
-                            <p className={`mt-3 text-xs sm:text-sm font-normal leading-relaxed ${theme === "dark" ? "text-zinc-400" : "text-slate-500"}`}>
-                              {project.shortDescription}
-                            </p>
-                          </div>
-
-                          {/* Bottom Link Indicators */}
-                          <div className={`mt-6 flex items-center justify-between border-t pt-4 ${theme === "dark" ? "border-zinc-800/60" : "border-slate-100"}`}>
-                            <a
-                              id={`project-live-${project.id}`}
-                              href={project.demoUrl}
-                              target="_blank"
-                              rel="noreferrer"
-                              className={`flex items-center gap-1.5 text-xs sm:text-sm font-bold transition-colors ${
-                                theme === "dark" ? "text-[#00f5b4] hover:text-[#2dd4bf]" : "text-teal-600 hover:text-teal-700"
-                              }`}
-                            >
-                              <span>Live Demo</span>
-                              <ExternalLink size={14} />
-                            </a>
-
-                            <button
-                              id={`project-details-${project.id}`}
-                              onClick={() => {
-                                setSelectedProject(project);
-                                document.getElementById("portfolio")?.scrollIntoView({ behavior: 'smooth' });
-                              }}
-                              className={`flex items-center gap-1 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all shadow-sm cursor-pointer ${
-                                theme === "dark"
-                                  ? "bg-zinc-800 hover:bg-zinc-700/80 text-zinc-300 hover:text-white"
-                                  : "bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-800"
-                              }`}
-                            >
-                              <span>Details</span>
-                              <ArrowRight size={13} />
-                            </button>
-                          </div>
-                        </div>
+                    {/* View All Projects / Show Less Button */}
+                    {projects.length > 4 && (
+                      <div className="mt-10 sm:mt-12 flex justify-center">
+                        <button
+                          id="toggle-projects-btn"
+                          onClick={() => {
+                            if (isProjectsExpanded) {
+                              setIsProjectsExpanded(false);
+                              document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" });
+                            } else {
+                              setIsProjectsExpanded(true);
+                            }
+                          }}
+                          className={`group inline-flex items-center gap-2.5 px-6 py-3 rounded-xl font-bold text-xs sm:text-sm tracking-tight transition-all duration-300 cursor-pointer shadow-lg hover:-translate-y-0.5 active:scale-98 ${
+                            theme === "dark"
+                              ? "bg-[#0c2c2a] hover:bg-[#113b38] text-[#00f5b4] border border-teal-500/30 hover:border-teal-500/50 shadow-teal-500/10"
+                              : "bg-white hover:bg-slate-50 text-teal-800 border border-teal-600/30 hover:border-teal-600/50 shadow-teal-500/10"
+                          }`}
+                        >
+                          <span>{isProjectsExpanded ? "Show Less" : "View All Projects"}</span>
+                          <ChevronDown
+                            size={16}
+                            className={`transition-transform duration-300 ${isProjectsExpanded ? "rotate-180" : ""}`}
+                          />
+                        </button>
                       </div>
-                    ))}
+                    )}
                   </motion.div>
                 )}
 
